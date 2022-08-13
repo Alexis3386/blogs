@@ -1,0 +1,17 @@
+{
+    "name": "garom/testgestionsutilisateurs",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Alexis Mathiot",
+            "email": "alesxis.mathiot@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}

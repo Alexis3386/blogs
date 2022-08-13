@@ -1,0 +1,31 @@
+{% extends "base.twig" %}
+
+{% block title %}Inscription{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <form action="../register.php" method="post">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Adresse email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp">
+                        <div id="emailHelp" class="form-text">Nous ne divulgerons jamais votre adresse mail</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInput" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="exampleInput" name="name" aria-describedby="pseudoHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInput" class="form-label">Pseudo</label>
+                        <input type="text" class="form-control" id="exampleInput" name="pseudo" aria-describedby="pseudoHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Mots de passe</label>
+                        <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
