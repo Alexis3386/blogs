@@ -11,8 +11,13 @@ if (
     && Util::validStringNotEmpty($_POST, 'name'))
 ) {
     $php_errormsg = 'Merci de remplir les champs obligatoire';
-    exit();
+    exit($php_errormsg);
 }
+
+$req_mail = $pdo->prepare("SELECT mail FROM users WHERE mail = :email");
+$req_mail = $req_mail->bindParam(':email', $_POST['email'], PDO::PARAM_STR);
+
+
 
 $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 $query = $pdo->prepare("INSERT INTO `users` (pseudo, username, email, password) VALUES (:pseudo, :username, :email, :password)");
