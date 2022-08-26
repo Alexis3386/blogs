@@ -1,6 +1,8 @@
 <?php
 require 'vendor/autoload.php';
 
+session_start();
+
 $mail_dejautilise = false;
 $inscription_sucess = false;
 $mdp_invalide = false;
