@@ -5,6 +5,8 @@ require_once('vendor/autoload.php');
 use App\User;
 use App\Util;
 
+session_start();
+
 if (
 !(Util::validStringNotEmpty($_POST, 'email')
     && Util::validStringNotEmpty($_POST, 'password')
@@ -21,11 +23,9 @@ $query->execute();
 
 $user = $query->fetch();
 
-$user = new User($user['id'], $user['email'], $user['pseudo'], $user['username'], $user['isadmin'])
+$user = new User($user['id'], $user['email'], $user['pseudo'], $user['username'], $user['isadmin']);
 
-?>
-<pre>
-    <?php
-    var_dump($user);
-    ?>
-</pre>
+$_SESSION['user_pseudo'] =  $user->getPseudo();
+$_SESSION['user_name'] = $user->getUsername();
+
+header('Location: /');

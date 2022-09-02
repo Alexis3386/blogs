@@ -24,7 +24,7 @@ class Util
     {
         $majuscule = preg_match('@[A-Z]@', $mdp);
         $minuscule = preg_match('@[a-z]@', $mdp);
-        $chiffre = preg_match('@[0-9]@', $mdp);
+        $chiffre = preg_match('@\d@', $mdp);
 
         return !(!$majuscule || !$minuscule || !$chiffre || strlen($mdp) < 8);
     }

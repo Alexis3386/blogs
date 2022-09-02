@@ -4,6 +4,8 @@ require_once('vendor/autoload.php');
 
 use App\Util;
 
+session_start();
+
 if (
 !(Util::validStringNotEmpty($_POST, 'pseudo')
     && Util::validStringNotEmpty($_POST, 'email')
@@ -14,10 +16,10 @@ if (
     exit();
 }
 
-$req_mail = $pdo->prepare("SELECT email FROM users WHERE email = :email");
-$req_mail->bindParam(':email', $_POST['email'], PDO::PARAM_STR);
-$req_mail->execute();
-$resultat = $req_mail->fetch(PDO::FETCH_ASSOC);
+$verif_mail = $pdo->prepare("SELECT email FROM users WHERE email = :email");
+$verif_mail->bindParam(':email', $_POST['email'], PDO::PARAM_STR);
+$verif_mail->execute();
+$resultat = $verif_mail->fetch(PDO::FETCH_ASSOC);
 if ($resultat) {
     header('Location: /?p=inscription&mail_dejautilise');
     exit();
@@ -25,6 +27,16 @@ if ($resultat) {
 
 if (!Util::checkMdpFormat($_POST['password'])) {
     header('Location: /?p=inscription&mdp_invalide');
+    exit();
+}
+
+$ver_pseudo = $pdo->prepare("SELECT pseudo FROM users WHERE pseudo = :pseudo");
+$ver_pseudo->bindParam(':pseudo', $_POST['pseudo'], PDO::PARAM_STR);
+$ver_pseudo->execute();
+$resultat = $ver_pseudo->fetch(PDO::FETCH_ASSOC);
+var_dump($resultat);
+if ($resultat) {
+    header('Location: /?p=inscription&pseudo_dejautilise');
     exit();
 }
 

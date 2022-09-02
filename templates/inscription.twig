@@ -21,6 +21,10 @@
                     <div class="alert alert-warning">
                         Merci de remplir les champs obligatoires
                     </div>
+                {% elseif pseudodejautilise %}
+                    <div class="alert alert-warning">
+                        Pseudo déja utilisé, merci d'en choisir un autre
+                    </div>
                 {% endif %}
                 <form action="../register.php" method="post">
                     <div class="mb-3">
