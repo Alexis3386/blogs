@@ -1,11 +1,9 @@
 <?php
-require_once('config.php');
-require_once('vendor/autoload.php');
+require_once('init.php');
 
 use App\User;
 use App\Util;
 
-session_start();
 
 if (
 !(Util::validStringNotEmpty($_POST, 'email')

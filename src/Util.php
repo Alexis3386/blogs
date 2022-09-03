@@ -26,6 +26,6 @@ class Util
         $minuscule = preg_match('@[a-z]@', $mdp);
         $chiffre = preg_match('@\d@', $mdp);
 
-        return !(!$majuscule || !$minuscule || !$chiffre || strlen($mdp) < 8);
+        return (!$majuscule || !$minuscule || !$chiffre || strlen($mdp) < 8);
     }
 }

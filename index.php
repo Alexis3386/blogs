@@ -1,7 +1,7 @@
 <?php
-require 'vendor/autoload.php';
+require('init.php');
 
-session_start();
+
 $user_connecte = false;
 if (isset($_SESSION) && !empty($_SESSION)) {
     $user_connecte = true;
