@@ -5,17 +5,14 @@ require_once('vendor/autoload.php');
 
 session_start();
 
-
-
 use App\UserRepository;
 
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '861517');
-define('DB_NAME', 'blogs');
-define('DB_PORT', '3306');
-define('CHARSET', 'utf8mb4');
-
+const DB_SERVER = 'localhost';
+const DB_USERNAME = 'root';
+const DB_PASSWORD = 'root';
+const DB_NAME = 'blogs';
+const DB_PORT = '3306';
+const CHARSET = 'utf8mb4';
 
 
 try {

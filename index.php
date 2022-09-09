@@ -1,10 +1,13 @@
 <?php
 require('init.php');
 
-
+$user = null;
 $user_connecte = false;
 if (isset($_SESSION) && !empty($_SESSION)) {
     $user_connecte = true;
+    if (isset($_SESSION['user'])) {
+        $user = unserialize($_SESSION['user']);
+    }
 }
 
 $mail_dejautilise = false;
@@ -12,6 +15,7 @@ $inscription_sucess = false;
 $mdp_invalide = false;
 $champ_vide = false;
 $pseudo_dejautilise = false;
+$erreur_identifiant = false;
 
 // déconnexion
 
@@ -44,6 +48,11 @@ if (isset($_GET['pseudo_dejautilise'])) {
     $pseudo_dejautilise = true;
 }
 
+// test connexion
+if (isset($_GET['erreur_identifiant'])) {
+    $erreur_identifiant = true;
+}
+
 // Routing
 $page = 'home';
 if (isset($_GET['p'])) {
@@ -65,15 +74,23 @@ switch ($page) {
                 'champvide' => $champ_vide,
                 'pseudodejautilise' => $pseudo_dejautilise,
                 'user_connecte' => $user_connecte,
+                'user' => $user
             ]);
         break;
     case 'connexion' :
-        echo $twig->render('connexion.twig');
+        echo $twig->render('connexion.twig', [
+            'champvide' => $champ_vide,
+            'erreuridentifiant' => $erreur_identifiant,
+        ]);
         break;
     case 'home':
         echo $twig->render('home.twig', [
             'user_connecte' => $user_connecte,
-            'session' => $_SESSION],);
+            'user' => $user,
+        ]);
+        break;
+    case 'ajoutPost':
+        echo $twig->render('ajoutPost.twig');
         break;
     default:
         header('HTTp/1.0 404 Not Found');

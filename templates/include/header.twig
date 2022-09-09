@@ -13,6 +13,9 @@
                     {% if not user_connecte %}
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/?p=connexion">Connexion</a>
                     {% else %}
+                    {% if user.isadmin %}
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/?p=ajoutPost">Ajouter un Post</a>
+                    {% endif %}
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/?deconnexion">Déconnexion</a>
                     {% endif %}
                 </li>

@@ -6,25 +6,18 @@ namespace App;
 
 class User
 {
-    private int $id;
-    private string $email;
-    private string $pseudo;
-    private string $username;
-    private bool $isadmin;
 
-    public function __construct($id, $email, $pseudo, $username, $isadmin)
+
+    public function __construct(private int  $id, private string $email, private string $pseudo, private string $username,
+                                private bool $isadmin)
     {
-        $this->id = $id;
-        $this->email = $email;
-        $this->pseudo = $pseudo;
-        $this->username = $username;
-        $this->isadmin = $isadmin;
     }
 
     /**
      * @return bool
      */
-    public function isadmin() : bool {
+    public function isadmin(): bool
+    {
         return $this->isadmin;
     }
 
@@ -39,7 +32,16 @@ class User
     /**
      * @return string
      */
-    public function getPseudo(): string {
+    public function getPseudo(): string
+    {
         return $this->pseudo;
+    }
+
+    /**
+     * @return String
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
     }
 }

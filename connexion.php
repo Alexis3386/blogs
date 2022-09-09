@@ -1,9 +1,7 @@
 <?php
 require_once('init.php');
 
-use App\User;
 use App\Util;
-
 
 if (
 !(Util::validStringNotEmpty($_POST, 'email')
@@ -14,16 +12,17 @@ if (
     exit();
 }
 
-$sql = "SELECT * FROM users where email = :email";
-$query = $pdo->prepare($sql);
-$query->bindParam(":email", $_POST['email'], PDO::PARAM_STR);
-$query->execute();
 
-$user = $query->fetch();
+if (!$userRepository->isIdentifiantValid($_POST['password'], $_POST['email'])) {
+    header('Location: /?p=connexion&erreur_identifiant');
+    exit();
+}
 
-$user = new User($user['id'], $user['email'], $user['pseudo'], $user['username'], $user['isadmin']);
+$email = $_POST['email'];
+$user = $userRepository->connecteUser($email);
 
-$_SESSION['user_pseudo'] =  $user->getPseudo();
-$_SESSION['user_name'] = $user->getUsername();
+if (!isset($_SESSION['user'])) {
+    $_SESSION['user'] = serialize($user);
+}
 
 header('Location: /');

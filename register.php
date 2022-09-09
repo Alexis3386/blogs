@@ -2,8 +2,6 @@
 require_once('init.php');
 
 use App\Util;
-
-
 if (
 !(Util::validStringNotEmpty($_POST, 'pseudo')
     && Util::validStringNotEmpty($_POST, 'email')
