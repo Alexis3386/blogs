@@ -28,31 +28,30 @@ class UserRepository
         return empty($ver_pseudo->fetch(PDO::FETCH_ASSOC));
     }
 
-    public function enregistreUser(String $password, String $pseudo, String $username, STring $email): bool {
+    public function enregistreUser(String $password, String $pseudo, String $username, String $email, bool $isAdmin = false): bool
+    {
         $password = password_hash($password, PASSWORD_BCRYPT);
-        $query = $this->pdo->prepare("INSERT INTO `users` (pseudo, username, email, password) VALUES (:pseudo, :username, :email, :password)");
+        $query = $this->pdo->prepare("INSERT INTO `users` (pseudo, username, email, password, isadmin) VALUES (:pseudo, :username, :email, :password, :isadmin)");
         $query->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
         $query->bindParam(':username', $username, PDO::PARAM_STR);
         $query->bindParam(':email', $email, PDO::PARAM_STR);
         $query->bindParam(':password', $password, PDO::PARAM_STR);
+        $query->bindParam(':isadmin', $isadmin, PDO::PARAM_BOOL);
         return $query->execute();
     }
 
-    public function isIdentifiantValid(String $password, String $email): bool {
-        $password = password_hash($password, PASSWORD_BCRYPT);
-        $query = $this->pdo->prepare("SELECT * FROM `users` WHERE email = :email AND password = :password");
-        $query->bindParam(':email', $email, PDO::PARAM_STR );
-        $query->bindParam(':password', $password, PDO::PARAM_STR );
+    public function findUserConnected(String $password, String $email): ?User
+    {
+        $query = $this->pdo->prepare("SELECT * FROM `users` WHERE email = :email");
+        $query->bindParam(':email', $email, PDO::PARAM_STR);
         $query->execute();
-        return empty($query->fetch(PDO::FETCH_ASSOC));
-    }
-
-    public function connecteUser(String $email) : User {
-        $sql = "SELECT * FROM users where email = :email";
-        $query = $this->pdo->prepare($sql);
-        $query->bindParam(":email", $email, PDO::PARAM_STR);
-        $query->execute();
-        $user = $query->fetch();
-        return new User($user['id'], $user['email'], $user['pseudo'], $user['username'], $user['isadmin']);
+        $user = $query->fetch(PDO::FETCH_ASSOC);
+        if (!empty($user)) {
+            $hash = $user['password'];
+            if (password_verify($password, $hash)) {
+                return new User($user['id'], $user['email'], $user['pseudo'], $user['username'], $user['isadmin']);
+            }
+        }
+        return null;
     }
 }

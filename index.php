@@ -1,15 +1,6 @@
 <?php
 require('init.php');
 
-$user = null;
-$user_connecte = false;
-if (isset($_SESSION) && !empty($_SESSION)) {
-    $user_connecte = true;
-    if (isset($_SESSION['user'])) {
-        $user = unserialize($_SESSION['user']);
-    }
-}
-
 $mail_dejautilise = false;
 $inscription_sucess = false;
 $mdp_invalide = false;
@@ -28,36 +19,42 @@ if (isset($_GET['deconnexion'])) {
 
 
 //test inscription
-if (isset($_GET['mail_dejautilise'])) {
-    $mail_dejautilise = true;
-}
+// if (isset($_GET['mail_dejautilise'])) {
+//     $mail_dejautilise = true;
+// }
 
-if (isset($_GET['succes'])) {
-    $inscription_sucess = true;
-}
+// if (isset($_GET['succes'])) {
+//     $inscription_sucess = true;
+// }
 
-if (isset($_GET['mdp_invalide'])) {
-    $mdp_invalide = true;
-}
+// if (isset($_GET['mdp_invalide'])) {
+//     $mdp_invalide = true;
+// }
 
-if (isset($_GET['champ_vide'])) {
-    $champ_vide = true;
-}
+// if (isset($_GET['champ_vide'])) {
+//     $champ_vide = true;
+// }
 
-if (isset($_GET['pseudo_dejautilise'])) {
-    $pseudo_dejautilise = true;
-}
+// if (isset($_GET['pseudo_dejautilise'])) {
+//     $pseudo_dejautilise = true;
+// }
 
 // test connexion
-if (isset($_GET['erreur_identifiant'])) {
-    $erreur_identifiant = true;
-}
+// if (isset($_GET['erreur_identifiant'])) {
+//     $erreur_identifiant = true;
+// }
 
 // Routing
 $page = 'home';
 if (isset($_GET['p'])) {
     $page = $_GET['p'];
 }
+
+echo $twig->render('home.twig', [
+    'user_connecte' => $user_connecte,
+    'user' => $user,
+]);
+
 
 // Rendu du template
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/templates');
