@@ -26,4 +26,18 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         scrollPos = currentTop;
     });
+
 })
+
+let inputPassword = document.querySelectorAll('input[type = "password"]')
+    console.log(inputPassword);
+
+    inputPassword.forEach(input => {
+        input.addEventListener('input', Event => {
+            console.log(event.target.value);
+        } )
+    })
+
+    function verifPassword(password) {
+        console.log(password);
+    }

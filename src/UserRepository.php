@@ -36,7 +36,7 @@ class UserRepository
         $query->bindParam(':username', $username, PDO::PARAM_STR);
         $query->bindParam(':email', $email, PDO::PARAM_STR);
         $query->bindParam(':password', $password, PDO::PARAM_STR);
-        $query->bindParam(':isadmin', $isadmin, PDO::PARAM_BOOL);
+        $query->bindParam(':isadmin', $isAdmin, PDO::PARAM_INT);
         return $query->execute();
     }
 

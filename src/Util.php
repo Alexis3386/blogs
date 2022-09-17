@@ -28,4 +28,15 @@ class Util
 
         return (!$majuscule || !$minuscule || !$chiffre || strlen($mdp) < 8);
     }
+
+    public static function checkFileFormat($file) : bool
+    {
+        return getimagesize($file['tmp_name']);
+    }
+
+    public static function checkFileSize($file): bool
+    {
+        return $file['size'] > 500000;
+    }
+
 }

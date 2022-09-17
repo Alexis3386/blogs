@@ -34,3 +34,23 @@ if (isset($_SESSION, $_SESSION['user'])) {
     $user_connecte = true;
     $user = unserialize($_SESSION['user']);
 }
+
+function render(String $template, array $parametres = []) : void
+{
+    $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/templates');
+    $twig = new \Twig\Environment($loader, [
+        'cache' => false,
+        'debug' => true,  // __DIR__ . '/tmp'
+    ]);
+    
+    global $user, $user_connecte;
+    $defaultParam = [
+        'user_connecte' => $user_connecte,
+        'user' => $user,
+    ];
+    if (isset($_SESSION['notification'])){
+        $defaultParam['notification'] = $_SESSION['notification'];
+    }
+    echo $twig->render($template,  array_merge($defaultParam, $parametres));
+    unset($_SESSION['notification']);
+}

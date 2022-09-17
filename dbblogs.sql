@@ -1,13 +1,13 @@
--- MariaDB dump 10.19  Distrib 10.5.16-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
 --
 -- Host: localhost    Database: blogs
 -- ------------------------------------------------------
--- Server version	10.5.16-MariaDB
+-- Server version	8.0.29
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -16,91 +16,118 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `BlogPost`
+-- Table structure for table `blogpost`
 --
 
-DROP TABLE IF EXISTS `BlogPost`;
+DROP TABLE IF EXISTS `blogpost`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `BlogPost` (
-  `idPost` int(11) NOT NULL AUTO_INCREMENT,
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `blogpost` (
+  `idPost` int NOT NULL AUTO_INCREMENT,
   `titre` varchar(255) NOT NULL,
   `chapo` text NOT NULL,
   `content` longtext NOT NULL,
   `link` varchar(255) DEFAULT NULL,
-  `dateCreation` datetime NOT NULL DEFAULT current_timestamp(),
+  `dateCreation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dateMiseAJour` datetime DEFAULT NULL,
-  `idImagePrincipale` int(11) NOT NULL,
-  `idCategorie` int(11) NOT NULL,
+  `idImagePrincipale` int NOT NULL,
+  `idCategorie` int NOT NULL,
+  `idAuthor` int NOT NULL,
   PRIMARY KEY (`idPost`),
   KEY `idImagePrincipale` (`idImagePrincipale`),
   KEY `idCategorie` (`idCategorie`),
+  KEY `Fk_author` (`idAuthor`),
   CONSTRAINT `BlogPost_ibfk_1` FOREIGN KEY (`idImagePrincipale`) REFERENCES `photos` (`idphotos`),
-  CONSTRAINT `BlogPost_ibfk_2` FOREIGN KEY (`idCategorie`) REFERENCES `Categorie` (`idCategorie`)
+  CONSTRAINT `Fk_author` FOREIGN KEY (`idAuthor`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `BlogPost`
+-- Dumping data for table `blogpost`
 --
 
-LOCK TABLES `BlogPost` WRITE;
-/*!40000 ALTER TABLE `BlogPost` DISABLE KEYS */;
-/*!40000 ALTER TABLE `BlogPost` ENABLE KEYS */;
+LOCK TABLES `blogpost` WRITE;
+/*!40000 ALTER TABLE `blogpost` DISABLE KEYS */;
+/*!40000 ALTER TABLE `blogpost` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Categorie`
+-- Table structure for table `categorie`
 --
 
-DROP TABLE IF EXISTS `Categorie`;
+DROP TABLE IF EXISTS `categorie`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Categorie` (
-  `idCategorie` int(11) NOT NULL AUTO_INCREMENT,
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `categorie` (
+  `idCategorie` int NOT NULL AUTO_INCREMENT,
   `libelle` varchar(255) DEFAULT NULL,
-  `idPost` int(11) NOT NULL,
   PRIMARY KEY (`idCategorie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Categorie`
+-- Dumping data for table `categorie`
 --
 
-LOCK TABLES `Categorie` WRITE;
-/*!40000 ALTER TABLE `Categorie` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Categorie` ENABLE KEYS */;
+LOCK TABLES `categorie` WRITE;
+/*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
+/*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Commentaires`
+-- Table structure for table `categorieblogpost`
 --
 
-DROP TABLE IF EXISTS `Commentaires`;
+DROP TABLE IF EXISTS `categorieblogpost`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Commentaires` (
-  `idComment` int(11) NOT NULL AUTO_INCREMENT,
-  `contenu` varchar(255) DEFAULT NULL,
-  `datePublication` datetime DEFAULT NULL,
-  `iduser` int(11) NOT NULL,
-  `idPost` int(11) NOT NULL,
-  PRIMARY KEY (`idComment`),
-  KEY `iduser` (`iduser`),
-  KEY `idPost` (`idPost`),
-  CONSTRAINT `Commentaires_ibfk_1` FOREIGN KEY (`iduser`) REFERENCES `users` (`id`),
-  CONSTRAINT `Commentaires_ibfk_2` FOREIGN KEY (`idPost`) REFERENCES `BlogPost` (`idPost`)
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `categorieblogpost` (
+  `idcategorie` int NOT NULL,
+  `idblogpost` int NOT NULL,
+  PRIMARY KEY (`idcategorie`,`idblogpost`),
+  KEY `FK_blogpost` (`idblogpost`),
+  CONSTRAINT `FK_blogpost` FOREIGN KEY (`idblogpost`) REFERENCES `blogpost` (`idPost`),
+  CONSTRAINT `FK_categorie` FOREIGN KEY (`idcategorie`) REFERENCES `categorie` (`idCategorie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Commentaires`
+-- Dumping data for table `categorieblogpost`
 --
 
-LOCK TABLES `Commentaires` WRITE;
-/*!40000 ALTER TABLE `Commentaires` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Commentaires` ENABLE KEYS */;
+LOCK TABLES `categorieblogpost` WRITE;
+/*!40000 ALTER TABLE `categorieblogpost` DISABLE KEYS */;
+/*!40000 ALTER TABLE `categorieblogpost` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `commentaires`
+--
+
+DROP TABLE IF EXISTS `commentaires`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `commentaires` (
+  `idComment` int NOT NULL AUTO_INCREMENT,
+  `contenu` varchar(255) DEFAULT NULL,
+  `datePublication` datetime DEFAULT NULL,
+  `iduser` int NOT NULL,
+  `idPost` int NOT NULL,
+  PRIMARY KEY (`idComment`),
+  KEY `iduser` (`iduser`),
+  KEY `idPost` (`idPost`),
+  CONSTRAINT `Commentaires_ibfk_1` FOREIGN KEY (`iduser`) REFERENCES `users` (`id`),
+  CONSTRAINT `Commentaires_ibfk_2` FOREIGN KEY (`idPost`) REFERENCES `blogpost` (`idPost`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `commentaires`
+--
+
+LOCK TABLES `commentaires` WRITE;
+/*!40000 ALTER TABLE `commentaires` DISABLE KEYS */;
+/*!40000 ALTER TABLE `commentaires` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -109,11 +136,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `photos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `photos` (
-  `idphotos` int(11) NOT NULL,
+  `idphotos` int NOT NULL,
   `path` varchar(255) DEFAULT NULL,
-  `idPost` int(11) DEFAULT NULL,
+  `idPost` int DEFAULT NULL,
   PRIMARY KEY (`idphotos`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -133,16 +160,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `pseudo` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `isadmin` tinyint(1) NOT NULL DEFAULT 0,
+  `isadmin` tinyint(1) NOT NULL DEFAULT '0',
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,4 +191,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-09 16:27:00
+-- Dump completed on 2022-09-16 16:59:21
