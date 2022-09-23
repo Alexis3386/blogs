@@ -9,7 +9,7 @@ use App\UserRepository;
 
 const DB_SERVER = 'localhost';
 const DB_USERNAME = 'root';
-const DB_PASSWORD = '861517';
+const DB_PASSWORD = '861517blr';
 const DB_NAME = 'blogs';
 const DB_PORT = '3306';
 const CHARSET = 'utf8mb4';
