@@ -9,37 +9,43 @@ class Blogpost
     /**
      * @param Categorie[] $categorie
      */
-    public function __construct(private int $id, private string $titre, private String $chapo, private string $content,
-    private array $images, private DateTime $datecreation, private ?DateTime $datemodification, private array $categorie)
-    {
-
+    public function __construct(
+        private int $id,
+        private string $titre,
+        private String $chapo,
+        private string $content,
+        private DateTime $datecreation,
+        private ?DateTime $datemodification
+    ) {
     }
 
-    public function getId(): int {
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function getTitre() : String {
+    public function getTitre(): String
+    {
         return $this->titre;
     }
 
-    public function getChapo() : String {
+    public function getChapo(): String
+    {
         return $this->chapo;
     }
 
-    public function getContent() : String {
+    public function getContent(): String
+    {
         return $this->content;
     }
 
-    public function getImages() : array {
+    public function getImages(): int
+    {
         return $this->image;
     }
 
-    public function getDatecreation() : DateTime {
+    public function getDatecreation(): DateTime
+    {
         return $this->datecreation;
-    }
-
-    public function getCategorie() : array {
-        return $this->categorie;
     }
 }

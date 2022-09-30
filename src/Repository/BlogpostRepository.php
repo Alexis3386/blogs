@@ -6,7 +6,8 @@ namespace App\Repository;
 use App\Entity\User;
 use App\Entity\Blogpost;
 use App\Util;
-
+use App\Entity\Photo;
+use DateTime;
 use PDO;
 
 class BlogpostRepository
@@ -64,6 +65,40 @@ class BlogpostRepository
             $n += 1;
         }
         return $slug;
+    }
+
+    public function recuperePost(string $slug): Blogpost {
+        $query = $this->pdo->prepare('SELECT * FROM blogpost WHERE slug = :slug');
+        $query->bindParam(':slug', $slug, PDO::PARAM_STR);
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        if ($result)
+        {
+            $post = new Blogpost($result['idPost'], 
+            $result['titre'], 
+            $result['chapo'], 
+            $result['content'],
+            new DateTime($result['dateCreation']), 
+            new DateTime($result['dateMiseAJour']),
+            $result['idImagePrincipale']);
+        }
+        return $post;
+    }
+
+    public function recupereImage(int $id): array {
+        $query = $this->pdo->prepare('SELECT * FROM photos WHERE idPost = :id');
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function recupereCategorie(int $id): array {
+        $query = $this->pdo->prepare('SELECT * FROM categorie WHERE idPost = :id');
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 
     public function readLastPost(int $limit)

@@ -11,6 +11,7 @@ session_start();
 use App\Repository\BlogpostRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\UserRepository;
+use App\Repository\PhotoRepository;
 
 const DB_SERVER = 'localhost';
 const DB_USERNAME = 'root';
@@ -41,6 +42,7 @@ if (isset($_SESSION, $_SESSION['user'])) {
     $user = unserialize($_SESSION['user']);
     $blogpostRepository = new BlogpostRepository($pdo, $user);
     $categorieRepository = new CategorieRepository($pdo);
+    $photoRepository = new PhotoRepository($pdo);
 }
 
 function render(String $template, array $parametres = []) : void
