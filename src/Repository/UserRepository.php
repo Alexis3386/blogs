@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App;
+namespace App\Repository;
 
+use App\Entity\User;
 use PDO;
-use App\User;
 
 class UserRepository
 {
@@ -28,8 +28,9 @@ class UserRepository
         return empty($ver_pseudo->fetch(PDO::FETCH_ASSOC));
     }
 
-    public function enregistreUser(String $password, String $pseudo, String $username, String $email, bool $isAdmin = false): bool
+    public function enregistrer(String $password, String $pseudo, String $username, String $email, bool $isAdmin = false): bool
     {
+        // todo modifier avec un objet User
         $password = password_hash($password, PASSWORD_BCRYPT);
         $query = $this->pdo->prepare("INSERT INTO `users` (pseudo, username, email, password, isadmin) VALUES (:pseudo, :username, :email, :password, :isadmin)");
         $query->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);

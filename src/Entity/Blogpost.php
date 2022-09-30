@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Entity;
 
 use DateTime;
 
@@ -15,7 +15,7 @@ class Blogpost
 
     }
 
-    public function getID(): int {
+    public function getId(): int {
         return $this->id;
     }
 

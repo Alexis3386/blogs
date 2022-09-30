@@ -3,29 +3,36 @@
 {% block title %}Ajouter un Post
 {% endblock %}
 {% block content %}
-	<div class="container mb-3">
-		<div class="row">
-			<div class="col-6">
-				<form action="../addPost.php" method="post" enctype="multipart/form-data">
-					<div class="mb-3">
-						<label for="" class="form-label">Titre du post</label>
-						<input type="text" class="form-control" id="" name="titre" placeholder="titre du post">
-					</div>
-					<div class="mb-3">
-						<label for="exampleInput" class="form-label">Châpo</label>
-						<textarea name="chapo" id="" cols="30" rows="10" class="form-control" placeholder="Extrait de l'article"></textarea>
-					</div>
-					<div class="mb-3">
-						<label for="exampleInput" class="form-label">Texte de l'Article</label>
-						<textarea name="content" id="" cols="30" rows="10" class="form-control" placeholder="Contenue principale de l'article"></textarea>
-					</div>
-					<div class="mb-3">
-						<label for="" class="form-label">Choisissez l'image principale de l'article</label>
-						<input type="file" name="image_principale" class="form-control" accept=".jpg,.png,.gif,.webp" value="">
-					</div>
-					<button type="submit" class="btn btn-primary">Envoyer</button>
-				</form>
+	<div class="col-6">
+		<form action="../addPost.php" method="post" enctype="multipart/form-data">
+			<div class="mb-3">
+				<label for="" class="form-label">Titre du post</label>
+				<input type="text" class="form-control" id="" name="titre" placeholder="titre du post">
 			</div>
-		</div>
+			<div class="mb-3">
+				<label for="exampleInput" class="form-label">Châpo</label>
+				<textarea name="chapo" id="" cols="30" rows="10" class="form-control" placeholder="Extrait de l'article"></textarea>
+			</div>
+			<div class="mb-3">
+				<label for="exampleInput" class="form-label">Texte de l'Article</label>
+				<textarea name="content" id="" cols="30" rows="10" class="form-control" placeholder="Contenue principale de l'article"></textarea>
+			</div>
+			<div class="mb-3">
+				<fieldset>
+					<legend for="">Categorie, choisissez une ou plusieurs catégories</legend>
+					{% for categorie in categories %}
+						<div>
+							<input type="checkbox" name="categorie[]" value="{{categorie.id}}">
+							<label for="scales">{{categorie.libelle}}</label>
+						</div>
+					{% endfor %}
+				</fieldset>
+			</div>
+			<div class="mb-3">
+				<label for="" class="form-label">Choisissez l'image principale de l'article</label>
+				<input type="file" name="image_principale" class="form-control" accept=".jpg,.png,.gif,.webp" value="">
+			</div>
+			<button type="submit" class="btn btn-primary">Envoyer</button>
+		</form>
 	</div>
 {% endblock %}

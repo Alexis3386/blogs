@@ -1,11 +1,16 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 require_once('vendor/autoload.php');
 
 session_start();
 
-use App\UserRepository;
+use App\Repository\BlogpostRepository;
+use App\Repository\CategorieRepository;
+use App\Repository\UserRepository;
 
 const DB_SERVER = 'localhost';
 const DB_USERNAME = 'root';
@@ -28,11 +33,14 @@ try {
 
 $userRepository = new UserRepository($pdo);
 
+
 $user = null;
 $user_connecte = false;
 if (isset($_SESSION, $_SESSION['user'])) {
     $user_connecte = true;
     $user = unserialize($_SESSION['user']);
+    $blogpostRepository = new BlogpostRepository($pdo, $user);
+    $categorieRepository = new CategorieRepository($pdo);
 }
 
 function render(String $template, array $parametres = []) : void

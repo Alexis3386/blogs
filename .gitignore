@@ -1,3 +1,4 @@
 /vendor/
 ./exporteddbblogs.sql
 /.idea
+/.vscode

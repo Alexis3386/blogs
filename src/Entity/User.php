@@ -1,16 +1,26 @@
 <?php
 
 
-namespace App;
+namespace App\Entity;
 
 
 class User
 {
+    public function __construct(
+        private int $id,
+        private string $email,
+        private string $pseudo,
+        private string $username,
+        private bool $isadmin
+    ) {
+    }
 
-
-    public function __construct(private int  $id, private string $email, private string $pseudo, private string $username,
-                                private bool $isadmin)
+    /**
+     * @return int
+     */
+    public function getUserId(): int
     {
+        return $this->id;
     }
 
     /**

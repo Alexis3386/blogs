@@ -29,7 +29,7 @@ class Util
         return (!$majuscule || !$minuscule || !$chiffre || strlen($mdp) < 8);
     }
 
-    public static function checkFileFormat($file) : bool
+    public static function checkFileFormat($file): bool
     {
         return getimagesize($file['tmp_name']);
     }
@@ -39,4 +39,19 @@ class Util
         return $file['size'] > 500000;
     }
 
+    public static function slugify($text): string
+    {
+        $text = strip_tags($text);
+        $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+        setlocale(LC_ALL, 'en_US.utf8');
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        $text = preg_replace('~[^-\w]+~', '', $text);
+        $text = trim($text, '-');
+        $text = preg_replace('~-+~', '-', $text);
+        $text = strtolower($text);
+        if (empty($text)) {
+            return 'n-a';
+        }
+        return $text;
+    }
 }

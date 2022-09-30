@@ -138,7 +138,7 @@ DROP TABLE IF EXISTS `photos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `photos` (
-  `idphotos` int NOT NULL,
+  `idphotos` int NOT NULL AUTO_INCREMENT,
   `path` varchar(255) DEFAULT NULL,
   `idPost` int DEFAULT NULL,
   PRIMARY KEY (`idphotos`)
@@ -192,3 +192,6 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2022-09-16 16:59:21
+INSERT INTO `photos` (`path`, `idPost`)  value ('img/default.jpeg', 1);
+
+INSERT INTO `categorie` (`libelle`) values ('Astronomie'), ('Informatique'), ('Jeux vidéo'), ('Sport'), ('Autre');
