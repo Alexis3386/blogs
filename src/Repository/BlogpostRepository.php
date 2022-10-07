@@ -12,15 +12,14 @@ use PDO;
 
 class BlogpostRepository
 {
-    public function __construct(private PDO $pdo, private User $user)
+    public function __construct(private PDO $pdo)
     {
     }
 
-    public function enregistrePost(string $titre, string $chapo, string $content, int $idImage = 1): int
+    public function enregistrePost(string $titre, string $chapo, string $content, int $idAuthor, int $idImage = 1): int
     {
         $slug = $this->updateSlug($titre);
         $date = date("Y-m-d H:i:s");
-        $idAuthor = $this->user->getUserId();
         $query = $this->pdo->prepare("INSERT INTO `blogpost` (titre, 
                                                             chapo, 
                                                             content, 
@@ -67,17 +66,17 @@ class BlogpostRepository
         return $slug;
     }
 
-    public function recuperePost(string $slug): Blogpost {
-        $query = $this->pdo->prepare('SELECT * FROM blogpost WHERE slug = :slug');
-        $query->bindParam(':slug', $slug, PDO::PARAM_STR);
-        $query->execute();
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if ($result)
+    public function recuperePost(int $id): Blogpost {
+        $query = $this->pdo->prepare('SELECT * FROM blogpost WHERE idPost = :id');
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        if ($query->execute())
         {
+            $result = $query->fetch(PDO::FETCH_ASSOC);
             $post = new Blogpost($result['idPost'], 
             $result['titre'], 
             $result['chapo'], 
             $result['content'],
+            $result['idAuthor'],
             new DateTime($result['dateCreation']), 
             new DateTime($result['dateMiseAJour']),
             $result['idImagePrincipale']);
@@ -101,7 +100,11 @@ class BlogpostRepository
         return $result;
     }
 
-    public function readLastPost(int $limit)
-    {
+    public function readLastPost(int $limit): array {
+        $query = $this->pdo->prepare('SELECT * FROM blogpost ORDER BY `dateCreation` DESC limit :limit');
+        $query->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 }

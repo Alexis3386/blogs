@@ -3,6 +3,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Blogpost;
 use App\Entity\User;
 use PDO;
 
@@ -52,6 +53,19 @@ class UserRepository
             if (password_verify($password, $hash)) {
                 return new User($user['id'], $user['email'], $user['pseudo'], $user['username'], $user['isadmin']);
             }
+        }
+        return null;
+    }
+
+    public function findAuthor(Blogpost $post): ?User
+    {
+        $id = $post->getAuthorId();
+        $query = $this->pdo->prepare('SELECT * FROM `users` WHERE id = :id');
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        $query->execute();
+        $user = $query->fetch(PDO::FETCH_ASSOC);
+        if (!empty($user)) {
+            return new User($user['id'], $user['email'], $user['pseudo'], $user['username'], $user['isadmin']);
         }
         return null;
     }

@@ -14,6 +14,7 @@ class Blogpost
         private string $titre,
         private String $chapo,
         private string $content,
+        private int $authorId,
         private DateTime $datecreation,
         private ?DateTime $datemodification
     ) {
@@ -24,19 +25,24 @@ class Blogpost
         return $this->id;
     }
 
-    public function getTitre(): String
+    public function getTitre(): string
     {
         return $this->titre;
     }
 
-    public function getChapo(): String
+    public function getChapo(): string
     {
         return $this->chapo;
     }
 
-    public function getContent(): String
+    public function getContent(): string
     {
         return $this->content;
+    }
+
+    public function getAuthorId(): int
+    {
+        return $this->authorId;
     }
 
     public function getImages(): int

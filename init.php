@@ -20,6 +20,8 @@ const DB_NAME = 'blogs';
 const DB_PORT = '3306';
 const CHARSET = 'utf8mb4';
 
+const NB_POSTS_HOME = 4;
+
 
 try {
     $pdo = new PDO(
@@ -40,27 +42,30 @@ $user_connecte = false;
 if (isset($_SESSION, $_SESSION['user'])) {
     $user_connecte = true;
     $user = unserialize($_SESSION['user']);
-    $blogpostRepository = new BlogpostRepository($pdo, $user);
-    $categorieRepository = new CategorieRepository($pdo);
-    $photoRepository = new PhotoRepository($pdo);
 }
 
-function render(String $template, array $parametres = []) : void
+$blogpostRepository = new BlogpostRepository($pdo);
+$categorieRepository = new CategorieRepository($pdo);
+$photoRepository = new PhotoRepository($pdo);
+
+function render(String $template, array $parametres = []): void
 {
     $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/templates');
     $twig = new \Twig\Environment($loader, [
         'cache' => false,
-        'debug' => true,  // __DIR__ . '/tmp'
+        'debug' => true,
     ]);
-    
+
     global $user, $user_connecte;
     $defaultParam = [
         'user_connecte' => $user_connecte,
         'user' => $user,
     ];
-    if (isset($_SESSION['notification'])){
+    if (isset($_SESSION['notification'])) {
         $defaultParam['notification'] = $_SESSION['notification'];
     }
     echo $twig->render($template,  array_merge($defaultParam, $parametres));
     unset($_SESSION['notification']);
 }
+
+$lastPost = $blogpostRepository->readLastPost(NB_POSTS_HOME);

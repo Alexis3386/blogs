@@ -27,15 +27,13 @@ CREATE TABLE `blogpost` (
   `titre` varchar(255) NOT NULL,
   `chapo` text NOT NULL,
   `content` longtext NOT NULL,
-  `link` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
   `dateCreation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dateMiseAJour` datetime DEFAULT NULL,
+  `dateMiseAJour` datetime NOT NULL DEFAULT '1000-01-01 00:00:00.000000',
   `idImagePrincipale` int NOT NULL,
-  `idCategorie` int NOT NULL,
   `idAuthor` int NOT NULL,
   PRIMARY KEY (`idPost`),
   KEY `idImagePrincipale` (`idImagePrincipale`),
-  KEY `idCategorie` (`idCategorie`),
   KEY `Fk_author` (`idAuthor`),
   CONSTRAINT `BlogPost_ibfk_1` FOREIGN KEY (`idImagePrincipale`) REFERENCES `photos` (`idphotos`),
   CONSTRAINT `Fk_author` FOREIGN KEY (`idAuthor`) REFERENCES `users` (`id`)
@@ -193,5 +191,4 @@ UNLOCK TABLES;
 
 -- Dump completed on 2022-09-16 16:59:21
 INSERT INTO `photos` (`path`, `idPost`)  value ('img/default.jpeg', 1);
-
 INSERT INTO `categorie` (`libelle`) values ('Astronomie'), ('Informatique'), ('Jeux vidéo'), ('Sport'), ('Autre');

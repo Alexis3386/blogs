@@ -1,3 +1,6 @@
 <?php
 require('init.php');
-render('home.twig');
+
+render('home.twig', [
+    'lastPost' => $lastPost,
+]);
