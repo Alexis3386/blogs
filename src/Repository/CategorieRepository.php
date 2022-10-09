@@ -41,10 +41,11 @@ class CategorieRepository
     public function categorieByPost(Blogpost $post): array
     {
         $idPost = $post->getId();
-        $query = $this->pdo->prepare("SELECT * FROM `categorie`c INNER JOIN  `categorieblogpost`c2 ON 
+        $query = $this->pdo->prepare("SELECT * FROM `categorie`c INNER JOIN `categorieblogpost`c2 ON 
         c.idCategorie = c2.idcategorie WHERE c2.idblogpost = :idPost");
         $query->bindParam(':idPost', $idPost, PDO::PARAM_INT);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+
 }

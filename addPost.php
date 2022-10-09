@@ -12,7 +12,7 @@ if ($user == null or !$user->isadmin()) {
 
 
 if (isset($_POST) && !empty($_POST)) {
-    $lastId = $blogpostRepository->enregistrePost($_POST['titre'], $_POST['chapo'], $_POST['content'], $user->getId());
+    $lastId = $blogpostRepository->enregistrer($_POST['titre'], $_POST['chapo'], $_POST['content'], $user->getId());
     if (isset($_POST['categorie'])) {
         $categorieRepository->associeCategorie($_POST['categorie'], $lastId);
     }
