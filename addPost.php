@@ -4,6 +4,8 @@ require_once('init.php');
 
 $upload_dir = "assets/img";
 
+use App\Entity\Blogpost;
+
 
 if ($user == null or !$user->isadmin()) {
     header('Location: /');
@@ -12,7 +14,10 @@ if ($user == null or !$user->isadmin()) {
 
 
 if (isset($_POST) && !empty($_POST)) {
-    $lastId = $blogpostRepository->enregistrer($_POST['titre'], $_POST['chapo'], $_POST['content'], $user->getId());
+    $post = new Blogpost($_POST['titre'], $_POST['chapo'], $_POST['content'], $user->getId());
+    $lastId = $blogpostRepository->enregistrer($post);
+    $post->setId($lastId);
+    $slug = $blogpostRepository->updateSlug($post);
     if (isset($_POST['categorie'])) {
         $categorieRepository->associeCategorie($_POST['categorie'], $lastId);
     }

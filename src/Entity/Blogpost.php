@@ -10,14 +10,14 @@ class Blogpost
      * @param Categorie[] $categorie
      */
     public function __construct(
-        private ?int $id,
         private string $titre,
-        private string $slug,
         private String $chapo,
         private string $content,
         private int $authorId,
-        private DateTime $datecreation,
-        private DateTime $datemodification
+        private ?string $slug = null,
+        private ?int $id = null,
+        private ?DateTime $datecreation = null,
+        private ?DateTime $datemodification = null
     ) {
     }
 
@@ -41,7 +41,7 @@ class Blogpost
         $this->datemodification = $datemodification;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -71,7 +71,7 @@ class Blogpost
         return $this->image;
     }
 
-    public function getSlug(): int
+    public function getSlug(): ?string
     {
         return $this->slug;
     }

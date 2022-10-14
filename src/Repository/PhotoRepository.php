@@ -19,7 +19,7 @@ class PhotoRepository {
     }
 
     public function recuperPostImage(Blogpost $post) {
-        $idPost =  $post->getId();
+        $idPost = $post->getId();
         $query = $this->pdo->prepare('SELECT * FROM `photos` WHERE idPost = :idPost');
         $query->bindParam(':idPost', $idPost, PDO::PARAM_INT);
         $query->execute();

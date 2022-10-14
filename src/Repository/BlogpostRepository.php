@@ -20,6 +20,15 @@ class BlogpostRepository
         // $date = date("Y-m-d H:i:s");
         $post->setDateCreation(new DateTime());
         $post->setDateModification($post->getDateCreation());
+        $titre = $post->getTitre();
+        $chapo = $post->getChapo();
+        $content = $post->getContent();
+        $slug = $post->getSlug();
+        $dateCreation = $post->getDateCreation()->format("Y-m-d H:i:s");
+        $dateModification = $post->getDateModification()->format("Y-m-d H:i:s");
+        $authorId = $post->getAuthorId();
+        $imagePrincipale = $post->getImages();
+
 
         $query = $this->pdo->prepare("INSERT INTO `blogpost` (titre, 
                                                             chapo, 
@@ -35,14 +44,14 @@ class BlogpostRepository
                                                 :dateCreation, 
                                                 :idAuthor, 
                                                 :idImagePrincipale)");
-        $query->bindParam(':titre', $post->getTitre(), PDO::PARAM_STR);
-        $query->bindParam(':chapo', $post->getChapo(), PDO::PARAM_STR);
-        $query->bindParam(':content', $post->getContent(), PDO::PARAM_STR);
-        $query->bindParam(':slug', $post->getSlug(), PDO::PARAM_STR);
-        $query->bindParam(':dateCreation', $post->getDateCreation()->format("Y-m-d H:i:s"), PDO::PARAM_STR);
-        $query->bindParam(':dateModification', $post->getDateModification()->format("Y-m-d H:i:s"), PDO::PARAM_STR);
-        $query->bindParam(':idAuthor', $post->getAuthorId(), PDO::PARAM_INT);
-        $query->bindParam(':idImagePrincipale', $post->getImages(), PDO::PARAM_INT);
+        $query->bindParam(':titre', $titre, PDO::PARAM_STR);
+        $query->bindParam(':chapo', $chapo, PDO::PARAM_STR);
+        $query->bindParam(':content', $content, PDO::PARAM_STR);
+        $query->bindParam(':slug', $slug, PDO::PARAM_STR);
+        $query->bindParam(':dateCreation', $dateCreation, PDO::PARAM_STR);
+        $query->bindParam(':dateModification', $dateModification, PDO::PARAM_STR);
+        $query->bindParam(':idAuthor', $authorId, PDO::PARAM_INT);
+        $query->bindParam(':idImagePrincipale', $imagePrincipale, PDO::PARAM_INT);
 
         $query->execute();
         $post->setId($this->pdo->lastInsertId());
@@ -54,7 +63,7 @@ class BlogpostRepository
     {
         // Tester si le slug existe
         $slug = Util::slugify($post->getTitre());
-        if ($post->id !== null) {
+        if ($post->getId() !== null) {
             $query = $this->pdo->prepare("SELECT slug FROM blogpost WHERE slug = :slug AND idPost != :id");
             $query->bindParam(':id', $id, PDO::PARAM_STR);
         } else {
@@ -67,7 +76,7 @@ class BlogpostRepository
         $n = 0;
         while ($result !== false) {
             $n++;
-            if ($post->id !== null) {
+            if ($post->getId() !== null) {
                 $query = $this->pdo->prepare("SELECT slug FROM blogpost WHERE slug = :slug AND idPost != :id");
                 $query->bindParam(':id', $id, PDO::PARAM_STR);
             } else {

@@ -98,6 +98,29 @@ LOCK TABLES `categorieblogpost` WRITE;
 /*!40000 ALTER TABLE `categorieblogpost` ENABLE KEYS */;
 UNLOCK TABLES;
 
+DROP TABLE IF EXISTS `imageblogpost`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `imageblogpost` (
+  `idimage` int NOT NULL,
+  `idblogpost` int NOT NULL,
+  PRIMARY KEY (`idimage`,`idblogpost`),
+  KEY `FK_blogpost` (`idblogpost`),
+  CONSTRAINT `FK_blogpost_image` FOREIGN KEY (`idblogpost`) REFERENCES `blogpost` (`idPost`),
+  CONSTRAINT `FK_image` FOREIGN KEY (`idimage`) REFERENCES `image` (`idimage`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `imageblogpost`
+--
+
+LOCK TABLES `imageblogpost` WRITE;
+/*!40000 ALTER TABLE `imageblogpost` DISABLE KEYS */;
+/*!40000 ALTER TABLE `imageblogpost` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 --
 -- Table structure for table `commentaires`
 --
@@ -132,24 +155,23 @@ UNLOCK TABLES;
 -- Table structure for table `photos`
 --
 
-DROP TABLE IF EXISTS `photos`;
+DROP TABLE IF EXISTS `image`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `photos` (
-  `idphotos` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `image` (
+  `idimage` int NOT NULL AUTO_INCREMENT,
   `path` varchar(255) DEFAULT NULL,
-  `idPost` int DEFAULT NULL,
-  PRIMARY KEY (`idphotos`)
+  PRIMARY KEY (`idimage`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `photos`
+-- Dumping data for table `image`
 --
 
-LOCK TABLES `photos` WRITE;
-/*!40000 ALTER TABLE `photos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `photos` ENABLE KEYS */;
+LOCK TABLES `image` WRITE;
+/*!40000 ALTER TABLE `image` DISABLE KEYS */;
+/*!40000 ALTER TABLE `image` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -190,5 +212,4 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2022-09-16 16:59:21
-INSERT INTO `photos` (`path`, `idPost`)  value ('img/default.jpeg', 1);
 INSERT INTO `categorie` (`libelle`) values ('Astronomie'), ('Informatique'), ('Jeux vidéo'), ('Sport'), ('Autre');
