@@ -11,16 +11,23 @@ class PhotoRepository {
     {
     }
 
-    public function enregistrer(string $path, int $idPost): bool {
-        $query = $this->pdo->prepare('INSERT INTO `photos` (path, idPost) VALUE (:path, :idPost)');
+    public function enregistrer(string $path, Blogpost $post): bool {
+
+        $idPost = $post->getId();
+
+        $query = $this->pdo->prepare('INSERT INTO `image` (path) VALUE (:path)');
         $query->bindParam(':path', $path, PDO::PARAM_STR);
-        $query->bindParam(':idPost', $idPost, PDO::PARAM_INT);
-        return $query->execute();
+        $query->execute();
+        $idImage = $this->pdo->lastInsertId();
+
+        $query = $this->pdo->prepare('INSERT INTO `imageblogpost` (idimage, idblogpost) VALUE (:idimage, :idblogpost)');
+        $query->bindParam(':idimage', $idImage, PDO::PARAM_INT);
+        $query->bindParam(':idblogpost', $idPost, PDO::PARAM_INT);
     }
 
     public function recuperPostImage(Blogpost $post) {
         $idPost = $post->getId();
-        $query = $this->pdo->prepare('SELECT * FROM `photos` WHERE idPost = :idPost');
+        $query = $this->pdo->prepare('SELECT * FROM `image` INNER JOIN `imageblogpost` AS imb ON imb.idimage = image.idimage INNER JOIN `blogpost` as bp ON imb.idblogpost = bp.idPost WHERE bp.idPost = :idPost;');
         $query->bindParam(':idPost', $idPost, PDO::PARAM_INT);
         $query->execute();
         return $query->fetchAll(PDO::FETCH_ASSOC);

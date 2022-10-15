@@ -21,6 +21,7 @@ const DB_PORT = '3306';
 const CHARSET = 'utf8mb4';
 
 const NB_POSTS_HOME = 4;
+const NB_POSTS_PER_PAGE = 12;
 
 
 try {
@@ -33,6 +34,11 @@ try {
     error_log($e->getMessage());
     exit('Error connecting to database'); //Should be a message a typical user could understand
 }
+
+// filp whoops
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
 
 $userRepository = new UserRepository($pdo);
 
@@ -47,13 +53,15 @@ if (isset($_SESSION, $_SESSION['user'])) {
 $blogpostRepository = new BlogpostRepository($pdo);
 $categorieRepository = new CategorieRepository($pdo);
 $photoRepository = new PhotoRepository($pdo);
+$categories = $categorieRepository->returnAllcategorie();
+
 
 function render(String $template, array $parametres = []): void
 {
     $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/templates');
     $twig = new \Twig\Environment($loader, [
         'cache' => false,
-        'debug' => true,
+        'debug' => true
     ]);
 
     global $user, $user_connecte;

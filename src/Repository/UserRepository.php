@@ -56,7 +56,7 @@ class UserRepository
         }
         return null;
     }
-
+    
     public function findAuthor(Blogpost $post): ?User
     {
         $id = $post->getAuthorId();

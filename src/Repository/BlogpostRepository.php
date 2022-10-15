@@ -17,7 +17,6 @@ class BlogpostRepository
     public function enregistrer(Blogpost $post): Blogpost
     {
         $this->updateSlug($post);
-        // $date = date("Y-m-d H:i:s");
         $post->setDateCreation(new DateTime());
         $post->setDateModification($post->getDateCreation());
         $titre = $post->getTitre();
@@ -25,33 +24,31 @@ class BlogpostRepository
         $content = $post->getContent();
         $slug = $post->getSlug();
         $dateCreation = $post->getDateCreation()->format("Y-m-d H:i:s");
-        $dateModification = $post->getDateModification()->format("Y-m-d H:i:s");
+        $dateMiseajour = $post->getDateModification()->format("Y-m-d H:i:s");
         $authorId = $post->getAuthorId();
-        $imagePrincipale = $post->getImages();
 
 
         $query = $this->pdo->prepare("INSERT INTO `blogpost` (titre, 
                                                             chapo, 
                                                             content, 
                                                             slug, 
-                                                            dateCreation, 
-                                                            idAuthor, 
-                                                            idImagePrincipale) 
+                                                            dateCreation,
+                                                            datemiseajour,
+                                                            idAuthor) 
                                         VALUES (:titre, 
                                                 :chapo, 
                                                 :content, 
                                                 :slug, 
-                                                :dateCreation, 
-                                                :idAuthor, 
-                                                :idImagePrincipale)");
+                                                :dateCreation,
+                                                :datemiseajour,
+                                                :idAuthor)");
         $query->bindParam(':titre', $titre, PDO::PARAM_STR);
         $query->bindParam(':chapo', $chapo, PDO::PARAM_STR);
         $query->bindParam(':content', $content, PDO::PARAM_STR);
         $query->bindParam(':slug', $slug, PDO::PARAM_STR);
         $query->bindParam(':dateCreation', $dateCreation, PDO::PARAM_STR);
-        $query->bindParam(':dateModification', $dateModification, PDO::PARAM_STR);
+        $query->bindParam(':datemiseajour', $dateMiseajour, PDO::PARAM_STR);
         $query->bindParam(':idAuthor', $authorId, PDO::PARAM_INT);
-        $query->bindParam(':idImagePrincipale', $imagePrincipale, PDO::PARAM_INT);
 
         $query->execute();
         $post->setId($this->pdo->lastInsertId());
@@ -82,14 +79,15 @@ class BlogpostRepository
             } else {
                 $query = $this->pdo->prepare("SELECT slug FROM blogpost WHERE slug = :slug");
             }
-            $query->bindParam(':slug', $slug . $n, PDO::PARAM_STR);
+            $slug = $slug . $n;
+            $query->bindParam(':slug', $slug, PDO::PARAM_STR);
             $query->execute();
             $result = $query->fetch(PDO::FETCH_ASSOC);
         }
         if ($n > 0) {
             $post->setSlug($slug . $n);
         }
-        
+
         $post->setSlug($slug);
     }
 
@@ -100,15 +98,14 @@ class BlogpostRepository
         if ($query->execute()) {
             $result = $query->fetch(PDO::FETCH_ASSOC);
             $post = new Blogpost(
-                $result['idPost'],
                 $result['titre'],
-                $result['slug'],
                 $result['chapo'],
                 $result['content'],
-                $result['idAuthor'],
+                intval($result['idAuthor']),
+                $result['slug'],
+                $result['idPost'],
                 new DateTime($result['dateCreation']),
                 new DateTime($result['dateMiseAJour']),
-                $result['idImagePrincipale']
             );
         }
         return $post;
@@ -121,5 +118,36 @@ class BlogpostRepository
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }
+
+    public function findPostbyCategory(int $idCategorie, int $currentPage): array
+    {
+        $query = $this->pdo->prepare('SELECT bp.* FROM blogpost as bp 
+                                        INNER JOIN categorieblogpost as cbp
+                                        ON bp.idPost = cbp.idblogpost
+                                        INNER JOIN categorie as c
+                                        ON c.idCategorie = cbp.idcategorie
+                                        WHERE c.idCategorie = :idCategorie');
+        $query->bindParam(':idCategorie', $idCategorie, PDO::PARAM_INT);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function countNbpage() {
+        $count = (int)$this->pdo->query('SELECT COUNT(idPost) FROM blogpost LIMIT 1')->fetch(PDO::FETCH_NUM)[0];
+        return ceil($count / NB_POSTS_PER_PAGE);
+    }
+
+    public function pagination(int $currentPage)
+    {
+        //todo decouper en plus petite fonction
+        // pagination
+       
+        $pages = $this->countNbpage();
+        if ($currentPage > $pages) {
+            throw new Exception('Cette page n\'existe pas');
+        }
+        $query = $this->pdo->query("SELECT * FROM blogpost ORDER BY dateCreation DESC LIMIT {NB_POSTS_PER_PAGE}");
     }
 }

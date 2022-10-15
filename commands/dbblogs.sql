@@ -30,12 +30,9 @@ CREATE TABLE `blogpost` (
   `slug` varchar(255) DEFAULT NULL,
   `dateCreation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `dateMiseAJour` datetime NOT NULL DEFAULT '1000-01-01 00:00:00.000000',
-  `idImagePrincipale` int NOT NULL,
   `idAuthor` int NOT NULL,
   PRIMARY KEY (`idPost`),
-  KEY `idImagePrincipale` (`idImagePrincipale`),
   KEY `Fk_author` (`idAuthor`),
-  CONSTRAINT `BlogPost_ibfk_1` FOREIGN KEY (`idImagePrincipale`) REFERENCES `photos` (`idphotos`),
   CONSTRAINT `Fk_author` FOREIGN KEY (`idAuthor`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

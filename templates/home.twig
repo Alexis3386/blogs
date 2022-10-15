@@ -1,37 +1,47 @@
 {% extends "base.twig" %}
-
 {% block content %}
 	<!-- Main Content-->
 	<div class="container px-4 px-lg-5">
-		<h2>Bonjour
-			{{ user.getpseudo }}</h2>
-		<div class="row gx-4 gx-lg-5 justify-content-center">
-			<div class="col-md-10 col-lg-8 col-xl-7">
-				{% for post in lastPost %}
-					<!-- Post preview-->
-					<div class="post-preview">
-						<a href="showPost.php?idPost={{post.idPost}}">
-							<h2 class="post-title">{{post.titre}}</h2>
-							<h3 class="post-subtitle">{{post.chapo}}</h3>
-						</a>
-						<p class="post-meta">
-							Posted by
-							<a href="#!"></a>
-							on
-							{{post.dateCreation}}
-						</p>
-					</div>
-					<hr class="my-4"/>
-				{% endfor %}
-				<!-- Divider-->
+		<nav class="navbar navbar-expand-lg bg-light">
+			<h2>Bonjour{{ user.getpseudo }}</h2>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					{% for categorie in categories %}
+						<li class="nav-item">
+							<a class="nav-link" href="affichebyCategory.php?categorie={{categorie.id}}">{{ categorie.libelle }}</a>
+						</li>
+					{% endfor %}
+				</ul>
+				<ul class="navbar-nav mr-auto">
+					
+				</ul>
+			</nav>
 
-				<!-- Pager-->
-				<div class="d-flex justify-content-end mb-4">
-					<a class="btn btn-primary text-uppercase" href="#!">Older
-												                        Posts
-												                        →</a>
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					{% for post in lastPost %}
+						<!-- Post preview-->
+						<div class="post-preview">
+							<a href="showPost.php?idPost={{post.idPost}}">
+								<h2 class="post-title">{{post.titre}}</h2>
+								<h3 class="post-subtitle">{{post.chapo}}</h3>
+							</a>
+							<p class="post-meta">
+								Posted by
+								<a href="#">{{ user.getpseudo(post.idAuthor) }}</a>
+								on
+								{{post.dateCreation}}
+							</p>
+						</div>
+						<hr class="my-4"/>
+					{% endfor %}
+					<!-- Divider-->
+
+					<!-- Pager-->
+					<div class="d-flex justify-content-end mb-4">
+						<a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-{% endblock %}
+	{% endblock %}
