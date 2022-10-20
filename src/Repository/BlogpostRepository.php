@@ -10,6 +10,8 @@ use PDO;
 
 class BlogpostRepository
 {
+    const NB_POSTS_PER_PAGE = 12;
+
     public function __construct(private PDO $pdo)
     {
     }
@@ -122,32 +124,35 @@ class BlogpostRepository
 
     public function findPostbyCategory(int $idCategorie, int $currentPage): array
     {
-        $query = $this->pdo->prepare('SELECT bp.* FROM blogpost as bp 
+        $offset = $this->pagination($currentPage);
+        $query = $this->pdo->prepare("SELECT bp.* FROM blogpost as bp 
                                         INNER JOIN categorieblogpost as cbp
                                         ON bp.idPost = cbp.idblogpost
                                         INNER JOIN categorie as c
                                         ON c.idCategorie = cbp.idcategorie
-                                        WHERE c.idCategorie = :idCategorie');
+                                        WHERE c.idCategorie = :idCategorie
+                                        ORDER BY dateCreation 
+                                        DESC LIMIT " .  self::NB_POSTS_PER_PAGE . "
+                                        OFFSET $offset");
         $query->bindParam(':idCategorie', $idCategorie, PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
-    public function countNbpage() {
+    public function countNbpage()
+    {
         $count = (int)$this->pdo->query('SELECT COUNT(idPost) FROM blogpost LIMIT 1')->fetch(PDO::FETCH_NUM)[0];
-        return ceil($count / NB_POSTS_PER_PAGE);
+        return ceil($count / self::NB_POSTS_PER_PAGE);
     }
 
     public function pagination(int $currentPage)
     {
-        //todo decouper en plus petite fonction
-        // pagination
-       
+        $offset = self::NB_POSTS_PER_PAGE * ($currentPage - 1);
         $pages = $this->countNbpage();
         if ($currentPage > $pages) {
             throw new Exception('Cette page n\'existe pas');
         }
-        $query = $this->pdo->query("SELECT * FROM blogpost ORDER BY dateCreation DESC LIMIT {NB_POSTS_PER_PAGE}");
+        return $offset;
     }
 }

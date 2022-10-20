@@ -27,15 +27,14 @@ class CategorieRepository
         return $result;
     }
 
-    public function associeCategorie(array $categories, Blogpost $post)
+    public function associeCategorie(array $categories, int $idPost) : bool
     {
-        $idPost = $post->getId();
         foreach ($categories as $categorie) {
             $categorie = intval($categorie);
             $query = $this->pdo->prepare("INSERT INTO `categorieblogpost` (idcategorie, idblogpost) VALUES (:idcategorie, :idblogpost)");
             $query->bindParam(':idcategorie', $categorie, PDO::PARAM_INT);
             $query->bindParam(':idblogpost', $idPost, PDO::PARAM_INT);
-            $query->execute();
+            return $query->execute();
         }
     }
 

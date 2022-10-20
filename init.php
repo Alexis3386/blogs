@@ -21,7 +21,6 @@ const DB_PORT = '3306';
 const CHARSET = 'utf8mb4';
 
 const NB_POSTS_HOME = 4;
-const NB_POSTS_PER_PAGE = 12;
 
 
 try {
@@ -64,10 +63,11 @@ function render(String $template, array $parametres = []): void
         'debug' => true
     ]);
 
-    global $user, $user_connecte;
+    global $user, $user_connecte, $categories;
     $defaultParam = [
         'user_connecte' => $user_connecte,
         'user' => $user,
+        'categories' => $categories,
     ];
     if (isset($_SESSION['notification'])) {
         $defaultParam['notification'] = $_SESSION['notification'];
