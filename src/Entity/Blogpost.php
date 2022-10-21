@@ -46,6 +46,21 @@ class Blogpost
         return $this->id;
     }
 
+    public function setTitre(string $titre)
+    {
+        $this->titre = $titre;
+    }
+
+    public function setChapo(string $chapo)
+    {
+        $this->chapo = $chapo;
+    }
+
+    public function setContent(string $content)
+    {
+        $this->content = $content;
+    }
+
     public function getTitre(): string
     {
         return $this->titre;

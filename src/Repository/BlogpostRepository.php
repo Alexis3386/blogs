@@ -93,24 +93,30 @@ class BlogpostRepository
         $post->setSlug($slug);
     }
 
-    public function recuperePost(int $id): Blogpost
+    public function recuperePost(int $id): ?Blogpost
     {
         $query = $this->pdo->prepare('SELECT * FROM blogpost WHERE idPost = :id');
         $query->bindParam(':id', $id, PDO::PARAM_INT);
-        if ($query->execute()) {
-            $result = $query->fetch(PDO::FETCH_ASSOC);
-            $post = new Blogpost(
-                $result['titre'],
-                $result['chapo'],
-                $result['content'],
-                intval($result['idAuthor']),
-                $result['slug'],
-                $result['idPost'],
-                new DateTime($result['dateCreation']),
-                new DateTime($result['dateMiseAJour']),
-            );
+
+        if (!$query->execute()) {
+            return null;
         }
-        return $post;
+
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        if ($result === false) {
+            return null;
+        }
+        
+        return new Blogpost(
+            $result['titre'],
+            $result['chapo'],
+            $result['content'],
+            intval($result['idAuthor']),
+            $result['slug'],
+            $result['idPost'],
+            new DateTime($result['dateCreation']),
+            new DateTime($result['dateMiseAJour']),
+        );
     }
 
     public function readLastPost(int $limit): array
@@ -140,9 +146,31 @@ class BlogpostRepository
         return $result;
     }
 
-    public function countNbpage()
+    public function findPostWithPagination(int $currentPage)
     {
-        $count = (int)$this->pdo->query('SELECT COUNT(idPost) FROM blogpost LIMIT 1')->fetch(PDO::FETCH_NUM)[0];
+        $offset = $this->pagination($currentPage);
+        $query = $this->pdo->prepare("SELECT * FROM blogpost 
+                                        ORDER BY dateCreation 
+                                        DESC LIMIT " . self::NB_POSTS_PER_PAGE . " OFFSET $offset");
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function countNbpage(int $idCategorie = null): float
+    {
+        if ($idCategorie !== null) {
+            $idCategorie = intval($idCategorie);
+            $count = (int)$this->pdo->query("SELECT count(bp.idPost) 
+                                        FROM blogpost as bp 
+                                        INNER JOIN categorieblogpost as cbp 
+                                        ON bp.idPost = cbp.idblogpost 
+                                        INNER JOIN categorie as c 
+                                        ON c.idCategorie = cbp.idcategorie 
+                                        WHERE c.idCategorie = $idCategorie;")->fetch(PDO::FETCH_NUM)[0];
+        } else {
+            $count = (int)$this->pdo->query('SELECT COUNT(idPost) FROM blogpost LIMIT 1;')->fetch(PDO::FETCH_NUM)[0];
+        }
         return ceil($count / self::NB_POSTS_PER_PAGE);
     }
 
@@ -150,9 +178,52 @@ class BlogpostRepository
     {
         $offset = self::NB_POSTS_PER_PAGE * ($currentPage - 1);
         $pages = $this->countNbpage();
-        if ($currentPage > $pages) {
-            throw new Exception('Cette page n\'existe pas');
-        }
+        // if ($currentPage > $pages) {
+        //     throw new Exception('Cette page n\'existe pas');
+        // }
         return $offset;
+    }
+
+    public function delete(int $idPost)
+    {
+        $query = $this->pdo->prepare('DELETE FROM `blogpost` WHERE idPost = :idPost');
+        $query->bindValue(':idPost', $idPost, PDO::PARAM_INT);
+        $query->execute();
+        return $query;
+    }
+
+    public function updatePost(Blogpost $post): Blogpost
+    {
+        $this->updateSlug($post);
+        $post->setDateModification(new DateTime());
+        $titre = $post->getTitre();
+        $chapo = $post->getChapo();
+        $content = $post->getContent();
+        $slug = $post->getSlug();
+        $dateMiseajour = $post->getDateModification()->format("Y-m-d H:i:s");
+        $idAuthor = $post->getAuthorId();
+        $idPost = $post->getId();
+
+        $query = $this->pdo->prepare(
+            'UPDATE blogpost 
+                                SET titre = :titre, 
+                                    chapo = :chapo, 
+                                    content = :content, 
+                                    slug = :slug,
+                                    datemiseajour = :datemiseajour ,
+                                    idAuthor = :idAuthor
+                                WHERE idPost = :idPost'
+        );
+
+        $query->bindParam(':titre', $titre, PDO::PARAM_STR);
+        $query->bindParam(':chapo', $chapo, PDO::PARAM_STR);
+        $query->bindParam(':content', $content, PDO::PARAM_STR);
+        $query->bindParam(':slug', $slug, PDO::PARAM_STR);
+        $query->bindParam(':datemiseajour', $dateMiseajour, PDO::PARAM_STR);
+        $query->bindParam(':idAuthor', $idAuthor, PDO::PARAM_INT);
+        $query->bindParam(':idPost', $idPost, PDO::PARAM_INT);
+        $query->execute();
+
+        return $post;
     }
 }

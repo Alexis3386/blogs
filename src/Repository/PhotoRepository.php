@@ -23,6 +23,7 @@ class PhotoRepository {
         $query = $this->pdo->prepare('INSERT INTO `imageblogpost` (idimage, idblogpost) VALUE (:idimage, :idblogpost)');
         $query->bindParam(':idimage', $idImage, PDO::PARAM_INT);
         $query->bindParam(':idblogpost', $idPost, PDO::PARAM_INT);
+        return $query->execute();
     }
 
     public function recuperPostImage(Blogpost $post) {

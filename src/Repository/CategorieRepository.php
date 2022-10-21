@@ -27,8 +27,9 @@ class CategorieRepository
         return $result;
     }
 
-    public function associeCategorie(array $categories, int $idPost) : bool
+    public function associeCategorie(array $categories, Blogpost $post) : bool
     {
+        $idPost = $post->getId();
         foreach ($categories as $categorie) {
             $categorie = intval($categorie);
             $query = $this->pdo->prepare("INSERT INTO `categorieblogpost` (idcategorie, idblogpost) VALUES (:idcategorie, :idblogpost)");

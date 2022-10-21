@@ -7,7 +7,7 @@ if( isset($_GET['categorie']) && !empty($_GET['categorie'])) {
     if (!filter_var($currentPage, FILTER_VALIDATE_INT)) {
         throw new Exception('Numéro de page invalide');
     }
-    $nbpages = $blogpostRepository->countNbpage();
+    $nbpages = $blogpostRepository->countNbpage($categorieId);
     if ($currentPage <= 0) {
         throw new Exception('Numéro de page invalide');
     }

@@ -12,13 +12,12 @@ if ($user == null or !$user->isadmin()) {
     exit();
 }
 
-
 if (isset($_POST) && !empty($_POST)) {
     $post = new Blogpost($_POST['titre'], $_POST['chapo'], $_POST['content'], $user->getId());
-    $lastId = $blogpostRepository->enregistrer($post);
+    $post = $blogpostRepository->enregistrer($post);
     $slug = $blogpostRepository->updateSlug($post);
     if (isset($_POST['categorie'])) {
-        $categorieRepository->associeCategorie($_POST['categorie'], $lastId);
+        $categorieRepository->associeCategorie($_POST['categorie'], $post);
     }
     try {
 
@@ -86,4 +85,9 @@ if (isset($_POST) && !empty($_POST)) {
     }
 }
 
-render('addPost.twig', ['categories' => $categories]);
+render(
+    'addPost.twig',
+    [
+        'categories' => $categories,
+    ]
+);
