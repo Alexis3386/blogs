@@ -2,6 +2,8 @@
 
 require 'init.php';
 
+dump($_REQUEST);
+
 if (isset($_GET['idPost'])) {
     $id = $_GET['idPost'];
 }

@@ -11,19 +11,11 @@
 			</div>
 			<div class="mb-3">
 				<label for="exampleInput" class="form-label">Châpo</label>
-				<textarea name="chapo" id="" cols="30" rows="10" class="form-control" placeholder="Extrait de l'article">
-					{% if postUpdate %}
-						{{ postUpdate.chapo | trim }}
-					{% endif %}
-				</textarea>
+				<textarea name="chapo" id="" cols="30" rows="10" class="form-control" placeholder="Extrait de l'article">{% if postUpdate %}{{ postUpdate.chapo | trim }}{% endif %}</textarea>
 			</div>
 			<div class="mb-3">
 				<label for="exampleInput" class="form-label">Texte de l'Article</label>
-				<textarea name="content" id="" cols="30" rows="10" class="form-control" placeholder="Contenue principale de l'article">
-					{% if postUpdate %}
-						{{ postUpdate.content | trim }}
-					{% endif %}
-				</textarea>
+				<textarea name="content" id="" cols="30" rows="10" class="form-control" placeholder="Contenue principale de l'article">{% if postUpdate %}{{ postUpdate.content | trim }}{% endif %}</textarea>
 			</div>
 			<div class="mb-3">
 				<fieldset>

@@ -4,26 +4,43 @@
 
 
 {% block content %}
-<div class="container">
-    <h1>{{ post.titre }}</h1>
-    <h2>{{ post.chapo }}</h2>
-    <div class="d-flex justify-content-between">
-        <p>Posté par
-            {{ author.pseudo }}
-            le
-            {{ post.dateCreation |date('d-m-Y') }}</p>
-        {% if categories %}
-        <p>{% for categorie in categories %} {{ categorie.libelle }} {% endfor %} </p>
-        {% endif %}
-    </div>
-    <div class="mb-4">
-        {{post.content}}
-    </div>
-    {% if image %}
-        {{image.path}}
-            {% if image | length == 1 %}
-                <img src="{{image[0].path}}" alt="">
-            {% endif %}
-    {% endif %}
-</div>
+	<div class="container">
+		<h1>{{ post.titre }}</h1>
+		<h2>{{ post.chapo }}</h2>
+		<div class="d-flex justify-content-between">
+			<p>Posté par
+				{{ author.pseudo }}
+				le
+				{{ post.dateCreation |date('d-m-Y') }}</p>
+			{% if categories %}
+				<p>
+					{% for categorie in categories %}
+						{{ categorie.libelle }}
+					{% endfor %}
+				</p>
+			{% endif %}
+		</div>
+		<div class="mb-4">
+			{{post.content}}
+		</div>
+		{% if image %}
+			<div class="row mb-3">
+				<div class="col-12">
+					{% if image | length == 1 %}
+						<img class="img-fluid" src="{{image[0].path}}" alt="">
+					{% endif %}
+				</div>
+			</div>
+		{% endif %}
+
+		<div class="row mb-3">
+			<div class="col-12">
+				<form action="">
+					<input type="hidden" value="{{post.id}}">
+					<textarea class="form-control" name="commentaire" id="" cols="30" rows="3"></textarea>
+					<button class="btn btn-primary" type="submit">Ajouter un commentaire</button>
+				</form>
+			</div>
+		</div>
+	</div>
 {% endblock %}
