@@ -1,12 +1,23 @@
 <?php
 
-require 'init.php';
+use App\Entity\Commentaire;
 
-dump($_REQUEST);
+require 'init.php';
 
 if (isset($_GET['idPost'])) {
     $id = $_GET['idPost'];
 }
+
+if (isset($_POST) && !empty($_POST)) {
+    $commentaire = new Commentaire(
+        $_POST['content'],
+        $_POST['postId'],
+        $user->getId()
+ );
+ $commentaireRepository->enregistrer($commentaire);
+
+}
+
 
 $post = $blogpostRepository->recuperePost($id);
 $postimage = $photoRepository->recuperPostImage($post);

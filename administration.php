@@ -3,7 +3,7 @@
 require_once('init.php');
 
 if ($user == null or !$user->isadmin()) {
-    header('Location: /');
+    render('administration/administrationSignin.twig');
     exit();
 }
 
@@ -18,4 +18,4 @@ if (isset($_GET['delete']) && $_GET['delete'] === 'true' && !empty($_GET['idPost
     }
 }
 
-render('administration/administration.twig', ['posts' => $posts, 'currentPage' => $currentPage, 'nbpages' => $nbpages]);
+render('administration/dashboard.twig', ['posts' => $posts, 'currentPage' => $currentPage, 'nbpages' => $nbpages]);

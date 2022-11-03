@@ -10,12 +10,13 @@ session_start();
 
 use App\Repository\BlogpostRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\CommentaireRepository;
 use App\Repository\UserRepository;
 use App\Repository\PhotoRepository;
 
-const DB_SERVER = 'mariadb';
+const DB_SERVER = 'localhost';
 const DB_USERNAME = 'root';
-const DB_PASSWORD = 'secret';
+const DB_PASSWORD = 'root';
 const DB_NAME = 'blogs';
 const DB_PORT = '3306';
 const CHARSET = 'utf8mb4';
@@ -52,7 +53,9 @@ if (isset($_SESSION, $_SESSION['user'])) {
 $blogpostRepository = new BlogpostRepository($pdo);
 $categorieRepository = new CategorieRepository($pdo);
 $photoRepository = new PhotoRepository($pdo);
+$commentaireRepository = new CommentaireRepository($pdo);
 $categories = $categorieRepository->returnAllcategorie();
+
 
 
 function render(String $template, array $parametres = []): void

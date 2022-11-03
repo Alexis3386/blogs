@@ -157,8 +157,13 @@ class BlogpostRepository
         return $result;
     }
 
-    public function countNbpage(int $idCategorie = null): float
+    public function countNbpage(?int $idCategorie = null): float
     {
+        $count = $this->countNbPost($idCategorie);
+        return ceil($count / self::NB_POSTS_PER_PAGE);
+    }
+
+    public function countNbPost(?int $idCategorie = null) {
         if ($idCategorie !== null) {
             $idCategorie = intval($idCategorie);
             $count = (int)$this->pdo->query("SELECT count(bp.idPost) 
@@ -171,7 +176,7 @@ class BlogpostRepository
         } else {
             $count = (int)$this->pdo->query('SELECT COUNT(idPost) FROM blogpost LIMIT 1;')->fetch(PDO::FETCH_NUM)[0];
         }
-        return ceil($count / self::NB_POSTS_PER_PAGE);
+        return $count;
     }
 
     public function pagination(int $currentPage)
