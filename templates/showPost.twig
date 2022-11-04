@@ -45,4 +45,10 @@
 			</div>
 		{% endif %}
 	</div>
+	<hr>
+	{% if commentaires %}
+		{% for commentaire in commentaires %}
+			{% include 'include/commentaire.twig' %}
+		{% endfor %}
+	{% endif %}
 {% endblock %}

@@ -10,7 +10,7 @@ $faker = Faker\Factory::create();
 // generate data by calling methods
 
 function createPostCategorie(int $n, array $categorie, $faker, $blogpostRepository, $categorieRepository) {
-    for ($n = 0; $n < 24; $n++) {
+    for ($i = 0; $i < $n; $i++) {
         $titre = $faker->sentence(rand(5, 10));
         $chapo = $faker->text(rand(75, 150));
         $content = $faker->text(rand(250, 500));
@@ -21,12 +21,19 @@ function createPostCategorie(int $n, array $categorie, $faker, $blogpostReposito
     }
 }
 
+function createCommentaire(int $n) {
+    for ($i = 0; $i < $n; $i++) {
+        
+    }
+}
 
 //post categorie Informatique 
 createPostCategorie(24, array(2), $faker, $blogpostRepository, $categorieRepository);
 
 //post catégorie
 createPostCategorie(50, array(3), $faker, $blogpostRepository, $categorieRepository);
+
+
 
 // create users
 // $queryuser = $pdo->prepare('INSERT INTO `users` (pseudo, username, email, password)

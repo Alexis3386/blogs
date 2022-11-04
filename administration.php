@@ -7,6 +7,7 @@ if ($user == null or !$user->isadmin()) {
     exit();
 }
 
+$nbPost = $blogpostRepository->countNbPost();
 $currentPage = (int)($_GET['page'] ?? 1);
 $nbpages = $blogpostRepository->countNbpage();
 $posts = $blogpostRepository->findPostWithPagination($currentPage);
@@ -18,4 +19,16 @@ if (isset($_GET['delete']) && $_GET['delete'] === 'true' && !empty($_GET['idPost
     }
 }
 
-render('administration/dashboard.twig', ['posts' => $posts, 'currentPage' => $currentPage, 'nbpages' => $nbpages]);
+if (isset($_POST['commentDel']) && isset($_POST['commentIdtoDel'])) {
+    if($commentaireRepository->deleteComment($_POST['commentIdtoDel'])) {
+        $_SESSION['notification']['notice'] = 'Votre commentaire a bien été éffacé';
+    }
+}
+
+render('administration/administrationPosts.twig', 
+    [   'nbPost'=> $nbPost ,
+        'posts' => $posts, 
+        'currentPage' => $currentPage, 
+        'nbpages' => $nbpages,
+        'commentaireRepository' => $commentaireRepository,]
+    );

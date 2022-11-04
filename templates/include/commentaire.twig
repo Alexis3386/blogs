@@ -1,0 +1,15 @@
+<div class="d-flex bg-light mb-2 p-3 justify-content-between">
+	<div>
+		<div class="bold">{{commentaire.datePublication}}</div>
+		<div>{{commentaire.contenu}}</div>
+	</div>
+	{% if (user.getId == commentaire.idUser) %}
+		<div class="d-flex">
+			<form action="" method="post">
+				<input type="hidden" name="commentDel">
+				<input type="hidden" name="commentIdtoDel" value={{commentaire.idComment}}>
+				<button class="btn btn-danger p-2" type="submit">Effacer</button>
+			</form>
+		</div>
+	{% endif %}
+</div>
