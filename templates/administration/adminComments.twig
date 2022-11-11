@@ -1,0 +1,9 @@
+{% extends 'base.twig' %}
+
+{% block title %}Administration commentaires
+{% endblock %}
+{% block content %}
+	{% for commentaire in commentsPending %}
+		{% include 'include/commentaire.twig' %}
+	{% endfor %}
+{% endblock %}

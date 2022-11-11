@@ -12,9 +12,9 @@
 				{{ author.pseudo }}
 				le
 				{{ post.dateCreation |date('d-m-Y') }}</p>
-			{% if categories %}
+			{% if postcategories %}
 				<p>
-					{% for categorie in categories %}
+					{% for categorie in postcategories %}
 						{{ categorie.libelle }}
 					{% endfor %}
 				</p>

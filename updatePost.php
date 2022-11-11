@@ -88,7 +88,7 @@ if (isset($_POST) && !empty($_POST)) {
     )) {
         throw new RuntimeException('Failed to move uploaded file.');
     } else {
-        $photoRepository->enregistrer($file_name, $lastId);
+        $photoRepository->enregistrer($file_name, $postUpdate);
     }
 }
 

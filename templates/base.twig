@@ -57,9 +57,11 @@
 					<div id="content"> {% block content %}{% endblock %}
 						</div>
 					</div>
-					<div class="col-sm-3">
-						{% include 'include/aside.twig' %}
-					</div>
+					{% if categories is defined and categories is not empty %}
+						<div class="col-sm-3">
+							{% include 'include/aside.twig' %}
+						</div>
+					{% endif %}
 				</div>
 				{% include 'include/footer.twig' %}
 

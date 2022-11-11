@@ -1,15 +1,27 @@
 <div class="d-flex bg-light mb-2 p-3 justify-content-between">
 	<div>
-		<div class="bold">{{commentaire.datePublication}}</div>
+		<div class="fw-bold">Posté le
+			{{commentaire.datePublication}}
+			par
+			{{commentaire.pseudo}}
+		</div>
 		<div>{{commentaire.contenu}}</div>
 	</div>
-	{% if (user.getId == commentaire.idUser) or (user.isAdmin) %}
-		<div class="d-flex">
+	<div class="d-flex">
+		{% if (user.getId == commentaire.idUser) or (user.isAdmin) %}
+			<div class="d-flex">
+				<form action="" method="post">
+					<input type="hidden" name="commentDel">
+					<input type="hidden" name="commentIdtoDel" value={{commentaire.idComment}}>
+					<button class="btn btn-danger p-2" type="submit">Effacer</button>
+				</form>
+			</div>
+		{% endif %}
+		{% if (user.isAdmin) and (comment.isValide == 0) %}
 			<form action="" method="post">
-				<input type="hidden" name="commentDel">
-				<input type="hidden" name="commentIdtoDel" value={{commentaire.idComment}}>
-				<button class="btn btn-danger p-2" type="submit">Effacer</button>
+				<input type="hidden" name="commentToValidate" value={{commentaire.idComment}}>
+				<button class="btn btn-primary p-2" type="submit">Valider</button>
 			</form>
-		</div>
-	{% endif %}
+		{% endif %}
+	</div>
 </div>
