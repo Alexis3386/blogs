@@ -59,4 +59,10 @@ class CommentaireRepository {
         $query->bindParam(':id', $id, PDO::PARAM_INT);
         return $query->execute();
     }
+
+    public function commentValidate(int $id): bool {
+        $query = $this->pdo->prepare('UPDATE `commentaires` SET isValide = true WHERE idComment = :id');
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        return $query->execute();
+    }
 }

@@ -49,34 +49,35 @@
 									<form action="" method="post">
 										<input type="hidden" name="commentToValidate" value={{commentaire.idComment}}>
 										<button class="btn btn-primary p-2" type="submit">Valider</button>
-									</div>
+									</form>
 								{% endif %}
 							</div>
-						{% endfor %}
+						</div>
 					{% endfor %}
-					<!-- Divider-->
-					<!-- Pager-->
-					<div class="d-flex justify-content-end mb-4">
-						<nav aria-label="Page navigation example">
-							<ul class="pagination">
-								{% if currentPage > 1 %}
-									<li class="page-item">
-										<a class="page-link" href="administration.php?page={{currentPage - 1}}" aria-label="Previous">
-											<span aria-hidden="true">&laquo Précédent</span>
-										</a>
-									</li>
-								{% endif %}
-								{% if currentPage < nbpages %}
-									<li class="page-item">
-										<a class="page-link" href="administration.php?page={{currentPage + 1}}" aria-label="Next">
-											<span aria-hidden="true">Suivant &raquo;</span>
-										</a>
-									</li>
-								{% endif %}
-							</ul>
-						</nav>
-					</div>
+				{% endfor %}
+				<!-- Divider-->
+				<!-- Pager-->
+				<div class="d-flex justify-content-end mb-4">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+							{% if currentPage > 1 %}
+								<li class="page-item">
+									<a class="page-link" href="administration.php?page={{currentPage - 1}}" aria-label="Previous">
+										<span aria-hidden="true">&laquo Précédent</span>
+									</a>
+								</li>
+							{% endif %}
+							{% if currentPage < nbpages %}
+								<li class="page-item">
+									<a class="page-link" href="administration.php?page={{currentPage + 1}}" aria-label="Next">
+										<span aria-hidden="true">Suivant &raquo;</span>
+									</a>
+								</li>
+							{% endif %}
+						</ul>
+					</nav>
 				</div>
 			</div>
 		</div>
-	{% endblock %}
+	</div>
+{% endblock %}

@@ -3,7 +3,7 @@
 		<div class="bold">{{commentaire.datePublication}}</div>
 		<div>{{commentaire.contenu}}</div>
 	</div>
-	{% if (user.getId == commentaire.idUser) %}
+	{% if (user.getId == commentaire.idUser) or (user.isAdmin) %}
 		<div class="d-flex">
 			<form action="" method="post">
 				<input type="hidden" name="commentDel">

@@ -7,6 +7,7 @@ use App\Entity\Blogpost;
 use App\Util;
 use DateTime;
 use PDO;
+use PDOStatement;
 
 class BlogpostRepository
 {
@@ -106,7 +107,7 @@ class BlogpostRepository
         if ($result === false) {
             return null;
         }
-        
+
         return new Blogpost(
             $result['titre'],
             $result['chapo'],
@@ -146,7 +147,7 @@ class BlogpostRepository
         return $result;
     }
 
-    public function findPostWithPagination(int $currentPage)
+    public function findPostWithPagination(int $currentPage): array
     {
         $offset = $this->pagination($currentPage);
         $query = $this->pdo->prepare("SELECT * FROM blogpost 
@@ -163,7 +164,8 @@ class BlogpostRepository
         return ceil($count / self::NB_POSTS_PER_PAGE);
     }
 
-    public function countNbPost(?int $idCategorie = null) {
+    public function countNbPost(?int $idCategorie = null): int
+    {
         if ($idCategorie !== null) {
             $idCategorie = intval($idCategorie);
             $count = (int)$this->pdo->query("SELECT count(bp.idPost) 
@@ -179,7 +181,7 @@ class BlogpostRepository
         return $count;
     }
 
-    public function pagination(int $currentPage)
+    public function pagination(int $currentPage): int
     {
         $offset = self::NB_POSTS_PER_PAGE * ($currentPage - 1);
         $pages = $this->countNbpage();
@@ -189,7 +191,7 @@ class BlogpostRepository
         return $offset;
     }
 
-    public function delete(int $idPost)
+    public function delete(int $idPost): PDOStatement
     {
         $query = $this->pdo->prepare('DELETE FROM `blogpost` WHERE idPost = :idPost');
         $query->bindValue(':idPost', $idPost, PDO::PARAM_INT);

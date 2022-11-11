@@ -13,7 +13,7 @@ class Util
         return !empty($donnees[$name]);
     }
 
-    public static function checkMAilFormat($donnees, $name): bool
+    public static function checkMailFormat($donnees, $name): bool
     {
         if (($name === 'email') && !filter_var($donnees[$name], FILTER_VALIDATE_EMAIL)) {
             return false;

@@ -21,19 +21,17 @@ function createPostCategorie(int $n, array $categorie, $faker, $blogpostReposito
     }
 }
 
-function createCommentaire(int $n) {
-    for ($i = 0; $i < $n; $i++) {
+// function createCommentaire(int $n) {
+//     for ($i = 0; $i < $n; $i++) {
         
-    }
-}
+//     }
+// }
 
 //post categorie Informatique 
 createPostCategorie(24, array(2), $faker, $blogpostRepository, $categorieRepository);
 
-//post catégorie
+//post catégorie 
 createPostCategorie(50, array(3), $faker, $blogpostRepository, $categorieRepository);
-
-
 
 // create users
 // $queryuser = $pdo->prepare('INSERT INTO `users` (pseudo, username, email, password)

@@ -14,9 +14,9 @@ use App\Repository\CommentaireRepository;
 use App\Repository\UserRepository;
 use App\Repository\PhotoRepository;
 
-const DB_SERVER = 'localhost';
+const DB_SERVER = 'mariadb';
 const DB_USERNAME = 'root';
-const DB_PASSWORD = 'root';
+const DB_PASSWORD = 'secret';
 const DB_NAME = 'blogs';
 const DB_PORT = '3306';
 const CHARSET = 'utf8mb4';

@@ -6,9 +6,6 @@ use DateTime;
 
 class Blogpost
 {
-    /**
-     * @param Categorie[] $categorie
-     */
     public function __construct(
         private string $titre,
         private String $chapo,

@@ -20,15 +20,24 @@ if (isset($_GET['delete']) && $_GET['delete'] === 'true' && !empty($_GET['idPost
 }
 
 if (isset($_POST['commentDel']) && isset($_POST['commentIdtoDel'])) {
-    if($commentaireRepository->deleteComment($_POST['commentIdtoDel'])) {
+    if ($commentaireRepository->deleteComment($_POST['commentIdtoDel'])) {
         $_SESSION['notification']['notice'] = 'Votre commentaire a bien été éffacé';
     }
 }
 
-render('administration/administrationPosts.twig', 
-    [   'nbPost'=> $nbPost ,
-        'posts' => $posts, 
-        'currentPage' => $currentPage, 
+if (isset($_POST['commentToValidate']) && !empty($_POST['commentToValidate'])) {
+    if ($commentaireRepository->commentValidate($_POST['commentToValidate'])) {
+        $_SESSION['notification']['notice'] = 'Le commentaire a été validé';
+    }
+}
+
+render(
+    'administration/administrationPosts.twig',
+    [
+        'nbPost' => $nbPost,
+        'posts' => $posts,
+        'currentPage' => $currentPage,
         'nbpages' => $nbpages,
-        'commentaireRepository' => $commentaireRepository,]
-    );
+        'commentaireRepository' => $commentaireRepository,
+    ]
+);
