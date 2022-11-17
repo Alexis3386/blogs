@@ -21,24 +21,20 @@ function createPostCategorie(int $n, array $categorie, $faker, $blogpostReposito
     }
 }
 
-// function createCommentaire(int $n) {
-//     for ($i = 0; $i < $n; $i++) {
-        
-//     }
-// }
+function createUser(int $n, $faker, $userRepository) {
+    for ($i = 0; $i < $n; $i++) {
+        $username = $faker->name();
+        $email = $faker->email();
+        $pseudo = $faker->firstname();
+        $password = '861517Blr';
+        $userRepository->enregistrer($password, $pseudo, $username, $email);
+    }
+}
+
+createUser(15, $faker, $userRepository);
 
 //post categorie Informatique 
-createPostCategorie(24, array(2), $faker, $blogpostRepository, $categorieRepository);
+// createPostCategorie(24, array(2), $faker, $blogpostRepository, $categorieRepository);
 
 //post catégorie 
-createPostCategorie(50, array(3), $faker, $blogpostRepository, $categorieRepository);
-
-// create users
-// $queryuser = $pdo->prepare('INSERT INTO `users` (pseudo, username, email, password)
-//                                 VALUES (:pseudo, :username, :email, :password)');
-
-// $password = password_hash('testUser', PASSWORD_BCRYPT);
-
-// for ($n = 0; $n < 50; $n++) {
-
-// }
+// createPostCategorie(50, array(3), $faker, $blogpostRepository, $categorieRepository);
