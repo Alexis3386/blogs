@@ -21,13 +21,15 @@ class CommentaireRepository
         $dateCreation = $commentaire->getDateCreation()->format("Y-m-d H:i:s");
         $idUser = $commentaire->getIdUser();
         $idPost = $commentaire->getIdPost();
+        $isValid = $commentaire->isValid();
 
-        $query = $this->pdo->prepare('INSERT INTO `commentaires` (contenu, datePublication, idUser, idPost) 
-                                        VALUE (:contenu, :datePublication, :idUser, :idPost)');
+        $query = $this->pdo->prepare('INSERT INTO `commentaires` (contenu, datePublication, idUser, idPost, isValid) 
+                                        VALUE (:contenu, :datePublication, :idUser, :idPost, :isValid)');
         $query->bindParam(':contenu', $contenu, PDO::PARAM_STR);
         $query->bindParam(':datePublication', $dateCreation, PDO::PARAM_STR);
         $query->bindParam(':idUser', $idUser, PDO::PARAM_INT);
         $query->bindParam(':idPost', $idPost, PDO::PARAM_INT);
+        $query->bindParam(':isValid', $idPost, PDO::PARAM_INT);
         return $query->execute();
     }
 
