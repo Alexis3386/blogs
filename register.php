@@ -1,6 +1,7 @@
 <?php
 require_once('init.php');
 
+use App\Entity\Categorie;
 use App\Util;
 
 if (isset($_POST) && !empty($_POST)) {
@@ -47,4 +48,4 @@ if (isset($_POST) && !empty($_POST)) {
     }
 }
 
-render('inscription.twig');
+render('inscription.twig', ['categories' => '']);

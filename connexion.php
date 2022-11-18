@@ -26,4 +26,4 @@ if (isset($_POST) && !empty($_POST)) {
     }
 }
 
-render('connexion.twig');
+render('connexion.twig', ['categories' => '']);
