@@ -29,7 +29,7 @@ if (isset($_POST) && !empty($_POST)) {
     $postUpdate = $blogpostRepository->updatePost($postUpdate);
 
     if (isset($_POST['categorie'])) {
-        $categorieRepository->associeCategorie($_POST['categorie'], $postUpdate);
+        $categorieRepository->associeCategorie($_POST['categorie'], $postUpdate, true);
     }
 
     // Undefined | Multiple Files | $_FILES Corruption Attack
@@ -91,6 +91,8 @@ if (isset($_POST) && !empty($_POST)) {
         $photoRepository->enregistrer($file_name, $postUpdate);
     }
 }
+
+print_r($categorieRepository->categorieByPost($postUpdate));
 
 render(
     'updatePost.twig',

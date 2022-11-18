@@ -27,15 +27,20 @@ class CategorieRepository
         return $result;
     }
 
-    public function associeCategorie(array $categories, Blogpost $post) : bool
+    public function associeCategorie(array $categories, Blogpost $post, bool $update) : void
     {
         $idPost = $post->getId();
+        if ($update) {
+            $query = $this->pdo->prepare("DELETE FROM `categorieblogpost` WHERE idblogpost = :idblogpost");
+            $query->bindParam(':idblogpost', $idPost);
+            $query->execute();
+        }
         foreach ($categories as $categorie) {
             $categorie = intval($categorie);
             $query = $this->pdo->prepare("INSERT INTO `categorieblogpost` (idcategorie, idblogpost) VALUES (:idcategorie, :idblogpost)");
             $query->bindParam(':idcategorie', $categorie, PDO::PARAM_INT);
             $query->bindParam(':idblogpost', $idPost, PDO::PARAM_INT);
-            return $query->execute();
+            $query->execute();
         }
     }
 

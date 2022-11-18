@@ -97,10 +97,10 @@ function verifPassword(pass) {
     }
 }
 
-let inputPassword = document.querySelectorAll('input[type = "password"]')
+let inputPassword = document.getElementById('verifPassword')
 
-inputPassword.forEach(input => {
-    input.addEventListener('input', Event => {
+if (inputPassword) {
+    inputPassword.addEventListener('input', Event => {
         verifPassword(Event.target.value);
     })
-})
+}

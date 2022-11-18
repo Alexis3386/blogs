@@ -22,7 +22,7 @@
 					<legend for="">Categorie, choisissez une ou plusieurs catégories</legend>
 					{% for categorie in categories %}
 						<div>
-							<input type="checkbox" name="categorie[]" value="{{categorie.id}}" {% for categorieUpdate in categorieUpdates %} {% if categorie.id == categorieUpdate.idCategorie %} checked {% endif %} {% endfor %}>
+							<input type="checkbox" name="categorie[]" value="{{categorie.id}}" {% for categoriePostUpdate in categoriePostUpdates %} {% if categorie.id == categoriePostUpdate.idcategorie %} checked {% endif %} {% endfor %}>
 							<label for="scales">{{categorie.libelle}}</label>
 						</div>
 					{% endfor %}

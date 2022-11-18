@@ -150,7 +150,9 @@ class BlogpostRepository
     public function findPostWithPagination(int $currentPage): array
     {
         $offset = $this->pagination($currentPage);
-        $query = $this->pdo->prepare("SELECT * FROM blogpost 
+        $query = $this->pdo->prepare("SELECT bp.*, us.pseudo FROM blogpost as bp 
+                                        INNER JOIN users as us
+                                        ON bp.idAuthor = us.id
                                         ORDER BY dateCreation 
                                         DESC LIMIT " . self::NB_POSTS_PER_PAGE . " OFFSET $offset");
         $query->execute();

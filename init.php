@@ -78,5 +78,3 @@ function render(String $template, array $parametres = []): void
     echo $twig->render($template,  array_merge($defaultParam, $parametres));
     unset($_SESSION['notification']);
 }
-
-$lastPost = $blogpostRepository->readLastPost(NB_POSTS_HOME);

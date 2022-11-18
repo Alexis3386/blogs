@@ -15,7 +15,6 @@ $currentPage = (int)($_GET['page'] ?? 1);
 $nbpages = $blogpostRepository->countNbpage();
 $posts = $blogpostRepository->findPostWithPagination($currentPage);
 
-
 render('home.twig', [
     'nbPost' => $nbPost,
     'posts' => $posts,

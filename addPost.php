@@ -17,7 +17,7 @@ if (isset($_POST) && !empty($_POST)) {
     $post = $blogpostRepository->enregistrer($post);
     $slug = $blogpostRepository->updateSlug($post);
     if (isset($_POST['categorie'])) {
-        $categorieRepository->associeCategorie($_POST['categorie'], $post);
+        $categorieRepository->associeCategorie($_POST['categorie'], $post, false);
     }
     try {
 

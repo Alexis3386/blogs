@@ -1,60 +1,58 @@
-{% extends "base.twig" %}
+{% extends 'base.twig' %}
 {% block content %}
-	<!-- Main Content-->
-	<div class="container px-4 px-lg-5">
-		<nav class="navbar navbar-expand-lg bg-light">
-			<h2>Bonjour
-				{{ user.getpseudo }}</h2>
-		</nav>
+  <!-- Main Content -->
+  <div class="container px-4 px-lg-5">
+    <nav class="navbar navbar-expand-lg bg-light">
+      <h2>
+        Bonjour
+        {{ user.getpseudo }}
+      </h2>
+    </nav>
 
-		<div class="row gx-4 gx-lg-5 justify-content-center">
-			<div class="col-12">
-				{% for post in posts %}
-					<!-- Post preview-->
-					<div class="post-preview">
-						<a href="showPost.php?idPost={{post.idPost}}">
-							<h2 class="post-title">{{post.titre}}</h2>
-							<h3 class="post-subtitle">{{post.chapo}}</h3>
-						</a>
-						<p class="post-meta">
-							Posted by
-							<a href="#">{{ user.getpseudo(post.idAuthor) }}</a>
-							on
-							{{post.dateCreation}}
-						</p>
-					</div>
-					{% if user.isadmin %}
-						<div>
-							<a class="btn btn-danger" href="/?delete=true&idPost={{ post.idPost }}">Supprimer</a>
-							<a class="btn btn-primary" href="updatePost.php?idPost= {{ post.idPost }}">Modifier</a>
-						</div>
-						<hr class="my-4"/>
-					{% endif %}
-				{% endfor %}
-				<!-- Divider-->
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-12">
+        {% for post in posts %}
+          <!-- Post preview -->
+          <div class="post-preview p-2 mb-3" style="background-color: aliceblue">
+            <a href="showPost.php?idPost={{ post.idPost }}">
+              <h2 class="post-title">{{ post.titre }}</h2>
+              <h3 class="post-subtitle">{{ post.chapo }}</h3>
+            </a>
+            <p class="post-meta">
+              Posté par
+              <a href="#">{{ post.pseudo }}</a>
+              le
+              {{ post.dateCreation }}
+            </p>
+            {% if user.isadmin %}
+              <div>
+                <a class="btn btn-danger" href="/?delete=true&idPost={{ post.idPost }}">Supprimer</a>
+                <a class="btn btn-primary" href="updatePost.php?idPost= {{ post.idPost }}">Modifier</a>
+              </div>
+            {% endif %}
+          </div>
+          <hr class="my-4" />
+        {% endfor %}
+        <!-- Divider -->
 
-				<!-- Pager-->
-				<div class="d-flex justify-content-end mb-4">
-					<nav aria-label="Page navigation example">
-						<ul class="pagination">
-							{% if currentPage > 1 %}
-								<li class="page-item">
-									<a class="page-link" href="/?page={{currentPage - 1}}" aria-label="Previous">
-										<span aria-hidden="true">&laquo Précédent</span>
-									</a>
-								</li>
-							{% endif %}
-							{% if currentPage < nbpages %}
-								<li class="page-item">
-									<a class="page-link" href="/?page={{currentPage + 1}}" aria-label="Next">
-										<span aria-hidden="true">Suivant &raquo;</span>
-									</a>
-								</li>
-							{% endif %}
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</div>
+        <!-- Pager -->
+        <div class="d-flex justify-content-end mb-4">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              {% if currentPage > 1 %}
+                <li class="page-item">
+                  <a class="page-link" href="/?page={{ currentPage - 1 }}" aria-label="Previous"><span aria-hidden="true">&laquo Précédent</span></a>
+                </li>
+              {% endif %}
+              {% if currentPage < nbpages %}
+                <li class="page-item">
+                  <a class="page-link" href="/?page={{ currentPage + 1 }}" aria-label="Next"><span aria-hidden="true">Suivant &raquo;</span></a>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

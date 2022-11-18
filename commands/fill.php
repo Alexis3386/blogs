@@ -44,10 +44,6 @@ function createComment(int $n, $idUser, $idPost, $faker, $commentaireRepository)
     }
 }
 
-createComment(10, 3, 3, $faker, $commentaireRepository);
-
-// createUser(15, $faker, $userRepository);
-
 
 //post categorie Informatique 
 // createPostCategorie(24, array(2), $faker, $blogpostRepository, $categorieRepository);
@@ -57,3 +53,7 @@ createComment(10, 3, 3, $faker, $commentaireRepository);
 
 //post catégorie Jeux vidéo et Sport
 // createPostCategorie(25, array(3, 4), $faker, $blogpostRepository, $categorieRepository);
+
+// createUser(15, $faker, $userRepository);
+
+createComment(10, 3, 3, $faker, $commentaireRepository);
