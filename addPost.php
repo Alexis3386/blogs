@@ -57,6 +57,7 @@ if (isset($_POST) && !empty($_POST)) {
                 'jpg' => 'image/jpeg',
                 'png' => 'image/png',
                 'gif' => 'image/gif',
+                'webp' => 'image/webp'
             ),
             true
         )) {

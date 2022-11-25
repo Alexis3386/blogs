@@ -17,7 +17,7 @@
 				</form>
 			</div>
 		{% endif %}
-		{% if (user.isAdmin) and (comment.isValide == 0) %}
+		{% if (user.isAdmin) and (commentaire.isValide == 0) %}
 			<form action="" method="post">
 				<input type="hidden" name="commentToValidate" value={{commentaire.idComment}}>
 				<button class="btn btn-primary p-2" type="submit">Valider</button>

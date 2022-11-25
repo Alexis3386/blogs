@@ -15,7 +15,9 @@
         "twig/twig": "^3.0",
         "filp/whoops": "^2.14",
         "fakerphp/faker": "^1.20",
-        "symfony/var-dumper": "^6.1"
+        "symfony/var-dumper": "^6.1",
+        "symfony/mailer": "^6.1",
+        "symfony/google-mailer": "^6.1"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.7"

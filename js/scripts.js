@@ -67,7 +67,6 @@ function removeToDOM(id) {
     if (el !== null) {
         el.remove();
     }
-    return
 }
 
 function verifPassword(pass) {

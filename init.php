@@ -14,6 +14,7 @@ use App\Repository\CommentaireRepository;
 use App\Repository\UserRepository;
 use App\Repository\PhotoRepository;
 
+
 const DB_SERVER = 'mariadb';
 const DB_USERNAME = 'root';
 const DB_PASSWORD = 'secret';

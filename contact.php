@@ -2,6 +2,10 @@
 
 require_once('init.php');
 
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mime\Email;
+
 if (isset($_POST) && !empty($_POST)) {
     // Checking For Blank Fields..
     if ($_POST["name"] == "" || $_POST["email"] == "" || $_POST["sub"] == "" || $_POST["msg"] == "") {
@@ -16,18 +20,29 @@ if (isset($_POST) && !empty($_POST)) {
         if (!$email) {
             echo "Invalid Sender's Email";
         } else {
+
+            $transport = Transport::fromDsn('gmail+smtp://alexis.mathiot@gmail.com:mvmwqshtnuybceeh@default');
+            $mailer = new Mailer($transport);
             $subject = $_POST['sub'];
             $message = $_POST['msg'];
-            $headers = 'From:' . $email . "rn"; // Sender's Email
-            $headers .= 'Cc:' . $email . "rn"; // Carbon copy to Sender
-            // Message lines should not exceed 70 characters (PHP rule), so wrap it
             $message = wordwrap($message, 70);
-            // Send Mail By PHP Mail Function
-            $response = mail("garomathiot@hotmail.com", $subject, $message, $headers);
-            echo $response;
-            echo "Your mail has been sent successfuly ! Thank you for your feedback";
+
+
+            $email = (new Email())
+                ->from($email)
+                ->to('alexis.mathiot@gmail.com')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject($subject)
+                ->html('<p>' . $message . '</p>');
+
+            $mailer->send($email);
         }
     }
 }
+
+
 
 render('contact.twig', ['categories' => '']);
