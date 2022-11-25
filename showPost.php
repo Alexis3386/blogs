@@ -32,8 +32,6 @@ $postcategories = $categorieRepository->categorieByPost($post);
 $author = $userRepository->findAuthor($post);
 $commentaires = $commentaireRepository->findCommentByPost($id);
 
-print_r($commentaires);
-
 render('showPost.twig', [
     'categories' => [],
     'commentaires' => $commentaires,

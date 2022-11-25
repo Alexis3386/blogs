@@ -91,9 +91,11 @@ if (isset($_POST) && !empty($_POST)) {
     } else {
         $photoRepository->enregistrer($file_name, $postUpdate);
     }
-}
 
-print_r($categorieRepository->categorieByPost($postUpdate));
+    header('Location: /');
+    $_SESSION['notification']['notice'] = 'Le post a bien été modifié';
+    exit();
+}
 
 render(
     'updatePost.twig',

@@ -84,11 +84,12 @@ if (isset($_POST) && !empty($_POST)) {
 
         echo $e->getMessage();
     }
+
+    header('Location: /');
+    $_SESSION['notification']['notice'] = 'Le post a bien été ajouté';
+    exit();
 }
 
 render(
-    'addPost.twig',
-    [
-        'categories' => $categories,
-    ]
+    'addPost.twig', ['categories' => $categories,]
 );
