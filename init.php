@@ -36,7 +36,8 @@ try {
     exit('Error connecting to database'); //Should be a message a typical user could understand
 }
 
-// filp whoops
+// filp whoops 
+// todo service debug sécurité notification render base_de_donnée variable_environnement
 $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
@@ -57,8 +58,7 @@ $photoRepository = new PhotoRepository($pdo);
 $commentaireRepository = new CommentaireRepository($pdo);
 $categories = $categorieRepository->returnAllcategorie();
 
-
-
+//todo service render
 function render(String $template, array $parametres = []): void
 {
     $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/templates');
