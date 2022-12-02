@@ -36,12 +36,6 @@ try {
     exit('Error connecting to database'); //Should be a message a typical user could understand
 }
 
-// filp whoops 
-// todo service debug sécurité notification render base_de_donnée variable_environnement
-$whoops = new \Whoops\Run;
-$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-$whoops->register();
-
 $userRepository = new UserRepository($pdo);
 
 

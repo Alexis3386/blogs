@@ -22,8 +22,7 @@ class Router
     public function findController(Request $request): ControllerInterface
     {
         foreach($this->controllers as $controller) {
-            if (preg_match($controller->getRegexPath(), $request->getPath()) > 0)
-            {
+            if (preg_match($controller->getRegexPath(), $request->getPath()) > 0) {
                 return $controller;
             }
         }

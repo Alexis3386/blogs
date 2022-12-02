@@ -5,13 +5,15 @@ namespace App\Repository;
 use App\Entity\Blogpost;
 use PDO;
 
-class PhotoRepository {
+class PhotoRepository
+{
 
     public function __construct(private PDO $pdo)
     {
     }
 
-    public function enregistrer(string $path, Blogpost $post): bool {
+    public function enregistrer(string $path, Blogpost $post): bool
+    {
 
         $idPost = $post->getId();
 
@@ -26,7 +28,8 @@ class PhotoRepository {
         return $query->execute();
     }
 
-    public function recuperPostImage(Blogpost $post) {
+    public function recuperPostImage(Blogpost $post)
+    {
         $idPost = $post->getId();
         $query = $this->pdo->prepare('SELECT * FROM `image` INNER JOIN `imageblogpost` AS imb ON imb.idimage = image.idimage INNER JOIN `blogpost` as bp ON imb.idblogpost = bp.idPost WHERE bp.idPost = :idPost;');
         $query->bindParam(':idPost', $idPost, PDO::PARAM_INT);

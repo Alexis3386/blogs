@@ -23,8 +23,10 @@ class CommentaireRepository
         $idPost = $commentaire->getIdPost();
         $isValid = $commentaire->isValid();
 
-        $query = $this->pdo->prepare('INSERT INTO `commentaires` (contenu, datePublication, idUser, idPost, isValid) 
-                                        VALUE (:contenu, :datePublication, :idUser, :idPost, :isValid)');
+        $query = $this->pdo->prepare(
+            'INSERT INTO `commentaires` (contenu, datePublication, idUser, idPost, isValid) 
+                                        VALUE (:contenu, :datePublication, :idUser, :idPost, :isValid)'
+        );
         $query->bindParam(':contenu', $contenu, PDO::PARAM_STR);
         $query->bindParam(':datePublication', $dateCreation, PDO::PARAM_STR);
         $query->bindParam(':idUser', $idUser, PDO::PARAM_INT);
@@ -35,12 +37,14 @@ class CommentaireRepository
 
     public function findCommentPending(): array
     {
-        $query = $this->pdo->prepare('
+        $query = $this->pdo->prepare(
+            '
             SELECT c.*, u.pseudo 
             FROM `commentaires` AS c 
                 JOIN users AS u 
                     ON c.idUser = u.id
-            WHERE isValide = 0');
+            WHERE isValide = 0'
+        );
 
         $query->execute();
 
@@ -49,11 +53,13 @@ class CommentaireRepository
 
     public function findCommentByPost(int $idPost): array
     {
-        $query = $this->pdo->prepare('
+        $query = $this->pdo->prepare(
+            '
             SELECT c.*, u.pseudo 
             FROM `commentaires` AS c 
                 JOIN users AS u ON c.idUser = u.id 
-            WHERE idPost = :idPost AND isValide = true');
+            WHERE idPost = :idPost AND isValide = true'
+        );
             
         $query->bindParam(':idPost', $idPost, PDO::PARAM_INT);
         $query->execute();

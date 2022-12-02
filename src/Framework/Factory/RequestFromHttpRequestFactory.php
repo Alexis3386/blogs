@@ -4,7 +4,8 @@ namespace App\Framework\Factory;
 
 use App\Framework\Http\Request;
 
-class RequestFromHttpRequestFactory {
+class RequestFromHttpRequestFactory
+{
 
     public static function createRequest() : Request
     {

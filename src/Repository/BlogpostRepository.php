@@ -31,7 +31,8 @@ class BlogpostRepository
         $authorId = $post->getAuthorId();
 
 
-        $query = $this->pdo->prepare("INSERT INTO `blogpost` (titre, 
+        $query = $this->pdo->prepare(
+            "INSERT INTO `blogpost` (titre, 
                                                             chapo, 
                                                             content, 
                                                             slug, 
@@ -44,7 +45,8 @@ class BlogpostRepository
                                                 :slug, 
                                                 :dateCreation,
                                                 :datemiseajour,
-                                                :idAuthor)");
+                                                :idAuthor)"
+        );
         $query->bindParam(':titre', $titre, PDO::PARAM_STR);
         $query->bindParam(':chapo', $chapo, PDO::PARAM_STR);
         $query->bindParam(':content', $content, PDO::PARAM_STR);
@@ -132,7 +134,8 @@ class BlogpostRepository
     public function findPostbyCategory(int $idCategorie, int $currentPage): array
     {
         $offset = $this->pagination($currentPage);
-        $query = $this->pdo->prepare("SELECT bp.* FROM blogpost as bp 
+        $query = $this->pdo->prepare(
+            "SELECT bp.* FROM blogpost as bp 
                                         INNER JOIN categorieblogpost as cbp
                                         ON bp.idPost = cbp.idblogpost
                                         INNER JOIN categorie as c
@@ -140,7 +143,8 @@ class BlogpostRepository
                                         WHERE c.idCategorie = :idCategorie
                                         ORDER BY dateCreation 
                                         DESC LIMIT " .  self::NB_POSTS_PER_PAGE . "
-                                        OFFSET $offset");
+                                        OFFSET $offset"
+        );
         $query->bindParam(':idCategorie', $idCategorie, PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -150,11 +154,13 @@ class BlogpostRepository
     public function findPostWithPagination(int $currentPage): array
     {
         $offset = $this->pagination($currentPage);
-        $query = $this->pdo->prepare("SELECT bp.*, us.pseudo FROM blogpost as bp 
+        $query = $this->pdo->prepare(
+            "SELECT bp.*, us.pseudo FROM blogpost as bp 
                                         INNER JOIN users as us
                                         ON bp.idAuthor = us.id
                                         ORDER BY dateCreation 
-                                        DESC LIMIT " . self::NB_POSTS_PER_PAGE . " OFFSET $offset");
+                                        DESC LIMIT " . self::NB_POSTS_PER_PAGE . " OFFSET $offset"
+        );
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return $result;
@@ -170,13 +176,15 @@ class BlogpostRepository
     {
         if ($idCategorie !== null) {
             $idCategorie = intval($idCategorie);
-            $count = (int)$this->pdo->query("SELECT count(bp.idPost) 
+            $count = (int)$this->pdo->query(
+                "SELECT count(bp.idPost) 
                                         FROM blogpost as bp 
                                         INNER JOIN categorieblogpost as cbp 
                                         ON bp.idPost = cbp.idblogpost 
                                         INNER JOIN categorie as c 
                                         ON c.idCategorie = cbp.idcategorie 
-                                        WHERE c.idCategorie = $idCategorie;")->fetch(PDO::FETCH_NUM)[0];
+                                        WHERE c.idCategorie = $idCategorie;"
+            )->fetch(PDO::FETCH_NUM)[0];
         } else {
             $count = (int)$this->pdo->query('SELECT COUNT(idPost) FROM blogpost LIMIT 1;')->fetch(PDO::FETCH_NUM)[0];
         }
