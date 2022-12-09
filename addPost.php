@@ -1,23 +1,24 @@
 <?php
 
-require_once('init.php');
+require_once 'init.php';
 
 $upload_dir = "assets/img";
 
 use App\Entity\Blogpost;
 
 
-if ($user === null or !$user->isadmin()) {
+if ($user === null || $user->isadmin() === false) {
     header('Location: /');
     exit();
 }
 
-if (isset($_POST) && !empty($_POST)) {
-    $post = new Blogpost($_POST['titre'], $_POST['chapo'], $_POST['content'], $user->getId());
+if (isset($_POST) && empty($_POST) === false) {
+    $newpost = array_map('htmlspecialchars', $_POST);
+    $post = new Blogpost($newpost['titre'], $newpost['chapo'], $newpost['content'], $user->getId());
     $post = $blogpostRepository->enregistrer($post);
     $slug = $blogpostRepository->updateSlug($post);
-    if (isset($_POST['categorie'])) {
-        $categorieRepository->associeCategorie($_POST['categorie'], $post, false);
+    if (isset($newpost['categorie'])) {
+        $categorieRepository->associeCategorie($newpost['categorie'], $post, false);
     }
     try {
 
@@ -61,7 +62,7 @@ if (isset($_POST) && !empty($_POST)) {
             ),
             true
         )) {
-            throw new RuntimeException('Invalid file format.');
+                throw new RuntimeException('Invalid file format.');
         }
 
         // You should name it uniquely.

@@ -1,11 +1,11 @@
 <?php
 
-require_once('init.php');
+require_once 'init.php';
 
 $upload_dir = "assets/img";
 
 
-if ($user === null or !$user->isadmin()) {
+if ($user === null || $user->isadmin() === false) {
     header('Location: /');
     exit();
 }
@@ -31,7 +31,7 @@ if (isset($_POST) && !empty($_POST)) {
     if (isset($_POST['categorie'])) {
         $categorieRepository->associeCategorie($_POST['categorie'], $postUpdate, true);
     }
-    
+
     try {
         // Undefined | Multiple Files | $_FILES Corruption Attack
         // If this request falls under any of them, treat it invalid.
