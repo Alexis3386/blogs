@@ -8,7 +8,7 @@ use Symfony\Component\Mime\Email;
 
 if (isset($_POST) && !empty($_POST)) {
     // Checking For Blank Fields..
-    if ($_POST["name"] == "" || $_POST["email"] == "" || $_POST["sub"] == "" || $_POST["msg"] == "") {
+    if (isset($_POST["name"]) === false || isset($_POST["email"]) === false || isset($_POST["sub"]) === false || isset($_POST["msg"]) === false) {
         echo "Fill All Fields..";
     } else {
         // Check if the "Sender's Email" input field is filled out

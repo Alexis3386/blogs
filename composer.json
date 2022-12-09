@@ -1,5 +1,6 @@
 {
     "name": "garom/testgestionsutilisateurs",
+    "licence": "proprietary",
     "autoload": {
         "psr-4": {
             "App\\": "src/"
