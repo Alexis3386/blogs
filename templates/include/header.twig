@@ -17,30 +17,44 @@
 					<li class="nav-item">
 						<a class="nav-link px-lg-3 py-3 py-lg-4" href="/connexion.php">Connexion</a>
 					</li>
-				{% else %}
-					{% if user.isadmin %}
-						<li class="nav-item">
-							<a class="nav-link px-lg-3 py-3 py-lg-4" href="/addPost.php">Ajouter un Post</a>
-						</li>
-					{% endif %}
-					<li class="nav-item">
-						<a class="nav-link px-lg-3 py-3 py-lg-4" href="/deconnexion.php">Déconnexion</a>
-					</li>
 				{% endif %}
 				<li class="nav-item">
 					<a class="nav-link px-lg-3 py-3 py-lg-4" href="/contact.php">Me contacter</a>
 				</li>
+				{% if user %}
+					<div class="dropdown">
+						<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="fa-solid fa-user"></i>
+							{{user.pseudo}}
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							{% if user.isadmin %}
+								<li>
+									<a class="nav-link px-lg-3 py-3 py-lg-4" href="/addPost.php">Ajouter un Post</a>
+								</li>
+								<li>
+									<a class="nav-link px-lg-3 py-3 py-lg-4" href="/administration.php">Commentaires en attente</a>
+								</li>
+							{% endif %}
+							<li>
+								<a class="nav-link px-lg-3 py-3 py-lg-4" href="/deconnexion.php">Déconnexion</a>
+							</li>
+						</ul>
+					</div>
+				{% endif %}
 			</ul>
 		</div>
-	</li>
-</div></nav><header class="masthead" style="background-image: url('../assets/img/home-bg.jpg')">
-<div class="container position-relative px-4 px-lg-5">
-	<div class="row gx-4 gx-lg-5 justify-content-center">
-		<div class="col-md-10 col-lg-8 col-xl-7">
-			<div class="site-heading">
-				<h1>Alexis Mathiot</h1>
-				<span class="subheading">Actualité scientifique, informatique et jeux vidéo</span>
+	</div>
+</nav>
+<header class="masthead" style="background-image: url('../assets/img/home-bg.jpg')">
+	<div class="container position-relative px-4 px-lg-5">
+		<div class="row gx-4 gx-lg-5 justify-content-center">
+			<div class="col-md-10 col-lg-8 col-xl-7">
+				<div class="site-heading">
+					<h1>Alexis Mathiot</h1>
+					<span class="subheading">Actualité scientifique, informatique et jeux vidéo</span>
+				</div>
 			</div>
 		</div>
 	</div>
-</div></header>
+</header>

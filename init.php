@@ -1,9 +1,4 @@
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 require_once('vendor/autoload.php');
 
 session_start();
@@ -15,11 +10,11 @@ use App\Repository\UserRepository;
 use App\Repository\PhotoRepository;
 
 
-const DB_SERVER = 'mariadb';
+const DB_SERVER = 'localhost';
 const DB_USERNAME = 'root';
-const DB_PASSWORD = 'secret';
+const DB_PASSWORD = '';
 const DB_NAME = 'blogs';
-const DB_PORT = '3306';
+const DB_PORT = '3307';
 const CHARSET = 'utf8mb4';
 
 const NB_POSTS_HOME = 4;
@@ -33,7 +28,7 @@ try {
     );
 } catch (Exception $e) {
     error_log($e->getMessage());
-    exit('Error connecting to database'); //Should be a message a typical user could understand
+    throw new Exception('Error connecting to database');
 }
 
 // filp whoops
@@ -56,8 +51,6 @@ $categorieRepository = new CategorieRepository($pdo);
 $photoRepository = new PhotoRepository($pdo);
 $commentaireRepository = new CommentaireRepository($pdo);
 $categories = $categorieRepository->returnAllcategorie();
-
-
 
 function render(String $template, array $parametres = []): void
 {

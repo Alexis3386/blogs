@@ -187,9 +187,6 @@ class BlogpostRepository
     {
         $offset = self::NB_POSTS_PER_PAGE * ($currentPage - 1);
         $pages = $this->countNbpage();
-        // if ($currentPage > $pages) {
-        //     throw new Exception('Cette page n\'existe pas');
-        // }
         return $offset;
     }
 

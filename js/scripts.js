@@ -48,25 +48,25 @@ function verifPasswordLength(pass) {
     return pass.length >= 8;
 }
 
-function addToDOM(message, id) {
-    // crée un nouvel élément div
-    let div = document.getElementById('errorpassword');
-    // et lui donne un peu de contenu
-    if (document.getElementById(id) === null) {
-        let newDiv = document.createElement('div');
-        newDiv.setAttribute("id", id);
-        let newContent = document.createTextNode(message);
-        // ajoute le nœud texte au nouveau div créé
-        newDiv.appendChild(newContent);
-        div.appendChild(newDiv);
-    }
+function selectIcon(id) {
+    let el = document.getElementById(id);
+    return [el.querySelector('.fault'), el.querySelector('.check')];
 }
 
-function removeToDOM(id) {
-    let el = document.getElementById(id);
-    if (el !== null) {
-        el.remove();
-    }
+function validPassword(id) {
+    let icons = selectIcon(id);
+    icons[0].classList.add('d-none');
+    icons[0].classList.remove('d-block');
+    icons[1].classList.add('d-block');
+    icons[1].classList.remove('d-none');
+}
+
+function invalidPassword(id) {
+    let icons = selectIcon(id);
+    icons[0].classList.add('d-block');
+    icons[0].classList.remove('d-none');
+    icons[1].classList.remove('d-block');
+    icons[1].classList.add('d-none');
 }
 
 function verifPassword(pass) {
@@ -75,24 +75,24 @@ function verifPassword(pass) {
     let validDigit = verifPasswordDigit(pass);
     let validLength = verifPasswordLength(pass);
     if (!validMaj) {
-        addToDOM('Le mot de passe doit comporter au moins une majuscule', 'maj');
+        invalidPassword('maj');
     } else if (validMaj) {
-        removeToDOM('maj')
+        validPassword('maj');
     }
     if (!validMin) {
-        addToDOM('Le mot de passe doit comporter au moins une minuscule', 'min');
+        invalidPassword('min');
     } else if (validMin) {
-        removeToDOM('min')
+        validPassword('min');
     }
     if (!validDigit) {
-        addToDOM('Le mot de passe doit comporter au moins un chiffre', 'digit');
+        invalidPassword('digit')
     } else if (validDigit) {
-        removeToDOM('digit')
+        validPassword('digit');
     }
     if (!validLength) {
-        addToDOM('le mot de passe doit comporter au moins 8 characters', 'length');
+        invalidPassword('length')
     } else if (validLength) {
-        removeToDOM('length')
+        validPassword('length');
     }
 }
 

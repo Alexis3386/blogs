@@ -2,7 +2,7 @@
 
 require_once('init.php');
 
-if ($user == null or !$user->isadmin()) {
+if ($user === null or !$user->isadmin()) {
     render('administration/administrationSignin.twig');
     exit();
 }
@@ -25,5 +25,6 @@ render(
     'administration/adminComments.twig',
     [
         'commentsPending' => $commentsPending,
+        'categories' => [],
     ]
 );

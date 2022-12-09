@@ -31,10 +31,6 @@ if (isset($_POST) && !empty($_POST)) {
             $email = (new Email())
                 ->from($email)
                 ->to('alexis.mathiot@gmail.com')
-                //->cc('cc@example.com')
-                //->bcc('bcc@example.com')
-                //->replyTo('fabien@example.com')
-                //->priority(Email::PRIORITY_HIGH)
                 ->subject($subject)
                 ->html('<p>' . $message . '</p>');
 

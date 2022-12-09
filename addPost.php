@@ -7,7 +7,7 @@ $upload_dir = "assets/img";
 use App\Entity\Blogpost;
 
 
-if ($user == null or !$user->isadmin()) {
+if ($user === null or !$user->isadmin()) {
     header('Location: /');
     exit();
 }
@@ -78,7 +78,7 @@ if (isset($_POST) && !empty($_POST)) {
         )) {
             throw new RuntimeException('Failed to move uploaded file.');
         } else {
-            $photoRepository->enregistrer($file_name, $post);
+            $photoRepository->enregistrer($file_name, $post, false);
         }
     } catch (RuntimeException $e) {
 

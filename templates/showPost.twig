@@ -5,13 +5,18 @@
 
 {% block content %}
 	<div class="container">
-		<h1>{{ post.titre }}</h1>
+		<h1>{{ post.titre |capitalize }}</h1>
 		<h2>{{ post.chapo }}</h2>
 		<div class="d-flex justify-content-between">
-			<p>Posté par
-				{{ author.pseudo }}
-				le
-				{{ post.dateCreation |date('d-m-Y') }}</p>
+			<div>
+				<p>Posté par
+					{{ author.pseudo }}
+					le
+					{{ post.dateCreation |date('d-m-Y H:i:s') }}</p>
+				<p>Dernière modification le
+					{{ post.dateModification |date('d-m-Y H:i:s') }}</p>
+			</div>
+
 			{% if postcategories %}
 				<p>
 					{% for categorie in postcategories %}

@@ -2,6 +2,7 @@
 
 use App\Entity\Commentaire;
 
+
 require 'init.php';
 
 if (isset($_GET['idPost'])) {

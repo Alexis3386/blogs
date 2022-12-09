@@ -18,22 +18,22 @@ class Blogpost
     ) {
     }
 
-    public function setId(int $id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    public function setSlug(string $slug)
+    public function setSlug(string $slug): void
     {
         $this->slug = $slug;
     }
 
-    public function setDateCreation(DateTime $datecreation)
+    public function setDateCreation(DateTime $datecreation): void
     {
         $this->datecreation = $datecreation;
     }
 
-    public function setDateModification(DateTime $datemodification)
+    public function setDateModification(DateTime $datemodification): void
     {
         $this->datemodification = $datemodification;
     }
@@ -43,17 +43,17 @@ class Blogpost
         return $this->id;
     }
 
-    public function setTitre(string $titre)
+    public function setTitre(string $titre): void
     {
         $this->titre = $titre;
     }
 
-    public function setChapo(string $chapo)
+    public function setChapo(string $chapo): void
     {
         $this->chapo = $chapo;
     }
 
-    public function setContent(string $content)
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }

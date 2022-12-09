@@ -46,7 +46,7 @@ class Commentaire
         return $this->datecreation;
     }
 
-    public function setDateCreation(DateTime $datecreation)
+    public function setDateCreation(DateTime $datecreation): void
     {
         $this->datecreation = $datecreation;
     }

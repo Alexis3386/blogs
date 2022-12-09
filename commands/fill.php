@@ -30,7 +30,7 @@ function createUser(int $n, $faker, $userRepository)
         $username = $faker->name();
         $email = $faker->email();
         $pseudo = $faker->firstname();
-        $password = '861517Blr';
+        $password = '123456Ab';
         $userRepository->enregistrer($password, $pseudo, $username, $email);
     }
 }
