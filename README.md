@@ -55,11 +55,13 @@ Php ainsi que Composer doivent être installés sur votre serveur afin de pouvoi
 
 **Etape 1 :** Cloner le Repositary sur votre serveur.
 
-**Etape 2 :** Créer une base de données sur votre SGBD et importer le fichier blog.example.sql
+**Etape 2 : ** LAncer la commande composer install 
 
-**Etape 3 :** Remplir le fichier init.php avec les accès à votre BDD.
+**Etape 3 :** Créer une base de données sur votre SGBD et importer le fichier blog.example.sql
 
-**Etape 4 :** Votre blog est désormais fonctionnel, vous pouvez utiliser l'accès administrateurou vou senregistrer en tant qu'utilisateur.
+**Etape 4 :** Remplir le fichier init.php avec les accès à votre BDD.
+
+**Etape 5 :** Votre blog est désormais fonctionnel, vous pouvez utiliser l'accès administrateurou vous enregistrer en tant qu'utilisateur.
 
 ## Librairies utilisées
 <ul>
