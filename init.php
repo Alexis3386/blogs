@@ -3,6 +3,7 @@ require_once 'vendor/autoload.php';
 require_once 'src/utilimage.php';
 
 session_start();
+session_regenerate_id();
 
 use App\Repository\BlogpostRepository;
 use App\Repository\CategorieRepository;
@@ -73,5 +74,3 @@ function render(String $template, array $parametres = []): void
     echo $twig->render($template,  array_merge($defaultParam, $parametres));
     unset($_SESSION['notification']);
 }
-
-$_POST = array_map('htmlspecialchars', $_POST);

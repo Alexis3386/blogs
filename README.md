@@ -53,9 +53,11 @@ Php ainsi que Composer doivent être installés sur votre serveur afin de pouvoi
 
 ## Installation
 
-**Etape 1 :** Cloner le Repositary sur votre serveur.
+**Etape 1 :** Cloner le Repository sur votre serveur.
 
-**Etape 2 : ** LAncer la commande composer install 
+**Etape 2 :** Lancer la commande composer install
+
+**Etape 3 :** Importer le fichier blogs.sql dans la base de données (vous aurez l'utilisateur admin et 5 catégories par default) ou lancer la commande php initialisation.php
 
 **Etape 3 :** Créer une base de données sur votre SGBD et importer le fichier blog.example.sql
 
@@ -72,10 +74,10 @@ Php ainsi que Composer doivent être installés sur votre serveur afin de pouvoi
 ### pour le développement
 <ul>
  <li>filp/whoops</li>
- <li>"fakerphp/faker"</li>
- <li> "symfony/var-dumper"</li>
- <li>"symfony/mailer</li>
- <li>"symfony/google-mailer</li>
+ <li>fakerphp/faker</li>
+ <li>symfony/var-dumper</li>
+ <li>symfony/mailer</li>
+ <li>symfony/google-mailer</li>
 </ul>
 
 ## Auteur

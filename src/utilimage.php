@@ -1,7 +1,6 @@
 <?php
 
 use App\Entity\Blogpost;
-use App\Repository\CategorieRepository;
 use App\Repository\PhotoRepository;
 
 function enregistrementImage(PhotoRepository $photoRepository, Blogpost $post): void

@@ -22,9 +22,9 @@ if ($postUpdate === null) {
 }
 
 if (isset($_POST) && !empty($_POST)) {
-    $postUpdate->setTitre($_POST['titre']);
-    $postUpdate->setChapo($_POST['chapo']);
-    $postUpdate->setContent($_POST['content']);
+    $postUpdate->setTitre(htmlspecialchars($_POST['titre']));
+    $postUpdate->setChapo(htmlspecialchars($_POST['chapo']));
+    $postUpdate->setContent(htmlspecialchars($_POST['content']));
     $postUpdate = $blogpostRepository->updatePost($postUpdate);
 
     if (isset($_POST['categorie'])) {
