@@ -132,13 +132,13 @@ class BlogpostRepository
     public function findPostbyCategory(int $idCategorie, int $currentPage): array
     {
         $offset = $this->pagination($currentPage);
-        $query = $this->pdo->prepare("SELECT bp.* FROM blogpost as bp 
+        $query = $this->pdo->prepare("SELECT bp.* FROM blogpost as bp
                                         INNER JOIN categorieblogpost as cbp
                                         ON bp.idPost = cbp.idblogpost
                                         INNER JOIN categorie as c
                                         ON c.idCategorie = cbp.idcategorie
                                         WHERE c.idCategorie = :idCategorie
-                                        ORDER BY dateCreation 
+                                        ORDER BY dateCreation
                                         DESC LIMIT " .  self::NB_POSTS_PER_PAGE . "
                                         OFFSET $offset");
         $query->bindParam(':idCategorie', $idCategorie, PDO::PARAM_INT);

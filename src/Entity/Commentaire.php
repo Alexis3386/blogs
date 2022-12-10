@@ -12,7 +12,8 @@ class Commentaire
         private int $idUser,
         private bool $isValid = false,
         private ?DateTime $datecreation = null,
-        private ?int $id = null
+        private ?int $id = null,
+        private ?string $pseudoUser = null
     ) {
     }
 
@@ -26,7 +27,7 @@ class Commentaire
         return $this->content;
     }
 
-    public function isValid(): bool
+    public function isValide(): bool
     {
         return $this->isValid;
     }

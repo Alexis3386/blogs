@@ -7,18 +7,18 @@ $upload_dir = "assets/img";
 
 if ($user === null || $user->isadmin() === false) {
     header('Location: /');
-    exit();
+    return;
 }
 
 if (!isset($_GET['idPost']) || empty($_GET['idPost'])) {
     header('HTTP/1.0 404 Not Found');
-    exit();
+    return;
 }
 
 $postUpdate = $blogpostRepository->recuperePost($_GET['idPost']);
 if ($postUpdate === null) {
     header('HTTP/1.0 404 Not Found');
-    exit();
+    return;
 }
 
 if (isset($_POST) && !empty($_POST)) {
@@ -35,7 +35,7 @@ if (isset($_POST) && !empty($_POST)) {
 
     header('Location: /');
     $_SESSION['notification']['notice'] = 'Le post a bien été modifié';
-    exit();
+    return;
 }
 
 render(

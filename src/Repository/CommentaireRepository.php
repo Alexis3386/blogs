@@ -21,7 +21,7 @@ class CommentaireRepository
         $dateCreation = $commentaire->getDateCreation()->format("Y-m-d H:i:s");
         $idUser = $commentaire->getIdUser();
         $idPost = $commentaire->getIdPost();
-        $isValid = $commentaire->isValid();
+        $isValid = $commentaire->isValide();
 
         $query = $this->pdo->prepare('INSERT INTO `commentaires` (contenu, datePublication, idUser, idPost, isValide)
                                         VALUE (:contenu, :datePublication, :idUser, :idPost, :isValid)');
@@ -33,8 +33,15 @@ class CommentaireRepository
         return $query->execute();
     }
 
+    /**
+     * find all pending comments
+     *
+     * @return Commentaire[]
+     */
     public function findCommentPending(): array
     {
+        $commentsArray = [];
+
         $query = $this->pdo->prepare('
             SELECT c.*, u.pseudo 
             FROM `commentaires` AS c 
@@ -43,22 +50,53 @@ class CommentaireRepository
             WHERE isValide = 0');
 
         $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $comment) {
+            $commentsArray[] = new Commentaire(
+                $comment['contenu'],
+                $comment['idPost'],
+                $comment['idUser'],
+                $comment['isValide'],
+                new Datetime($comment['datePublication']),
+                $comment['idComment'],
+                $comment['pseudo']
+            );
+        };
+        return $commentsArray;
     }
 
+    /**
+     * find comment by post
+     *
+     * @param integer $idPost
+     * @return Commentaire[]
+     */
     public function findCommentByPost(int $idPost): array
     {
+        $commentsArray = [];
         $query = $this->pdo->prepare('
             SELECT c.*, u.pseudo 
             FROM `commentaires` AS c 
                 JOIN users AS u ON c.idUser = u.id 
             WHERE idPost = :idPost AND isValide = true');
-            
+
         $query->bindParam(':idPost', $idPost, PDO::PARAM_INT);
         $query->execute();
 
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $comment) {
+            $commentsArray[] = new Commentaire(
+                $comment['contenu'],
+                $comment['idPost'],
+                $comment['idUser'],
+                $comment['isValide'],
+                new Datetime($comment['datePublication']),
+                $comment['idComment'],
+                $comment['pseudo']
+            );
+        };
+        return $commentsArray;
     }
 
     public function deleteComment(int $id): bool

@@ -9,7 +9,7 @@ use App\Entity\Blogpost;
 
 if ($user === null || $user->isadmin() === false) {
     header('Location: /');
-    exit();
+    return;
 }
 
 if (isset($_POST) && empty($_POST) === false) {
@@ -25,7 +25,7 @@ if (isset($_POST) && empty($_POST) === false) {
 
     header('Location: /');
     $_SESSION['notification']['notice'] = 'Le post a bien été ajouté';
-    exit();
+    return;
 }
 
 render(

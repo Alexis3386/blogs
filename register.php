@@ -42,7 +42,7 @@ if (isset($_POST) && empty($_POST) === false) {
         if ($userRepository->enregistrer($password, $pseudo, $username, $email)) {
             $_SESSION['notification']['success'] = 'Votre compte a bien été créé vous pouvez vous connectez';
             header('Location: /connexion.php');
-            exit();
+            return;
         }
     }
 }

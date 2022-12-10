@@ -4,7 +4,7 @@ require_once 'init.php';
 
 if ($user === null || $user->isadmin() === false) {
     render('administration/administrationSignin.twig');
-    exit();
+    return;
 }
 
 if (isset($_POST['commentDel']) && isset($_POST['commentIdtoDel'])) {
