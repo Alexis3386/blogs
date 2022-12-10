@@ -21,7 +21,7 @@ if (isset($_POST) && empty($_POST) === false) {
         $categorieRepository->associeCategorie($_POST['categorie'], $post, false);
     }
 
-    enregistrementImage($photoRepository, $post);
+    enregistrementImage($photoRepository, $post, false);
 
     header('Location: /');
     $_SESSION['notification']['notice'] = 'Le post a bien été ajouté';

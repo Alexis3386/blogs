@@ -3,7 +3,7 @@
 use App\Entity\Blogpost;
 use App\Repository\PhotoRepository;
 
-function enregistrementImage(PhotoRepository $photoRepository, Blogpost $post): void
+function enregistrementImage(PhotoRepository $photoRepository, Blogpost $post, bool $update): void
 {
     try {
         // Undefined | Multiple Files | $_FILES Corruption Attack
@@ -63,7 +63,7 @@ function enregistrementImage(PhotoRepository $photoRepository, Blogpost $post): 
         )) {
             throw new RuntimeException('Failed to move uploaded file.');
         } else {
-            $photoRepository->enregistrer($file_name, $post, false);
+            $photoRepository->enregistrer($file_name, $post, $update);
         }
     } catch (RuntimeException $e) {
 

@@ -31,7 +31,7 @@ if (isset($_POST) && !empty($_POST)) {
         $categorieRepository->associeCategorie($_POST['categorie'], $postUpdate, true);
     }
 
-    enregistrementImage($photoRepository, $postUpdate);
+    enregistrementImage($photoRepository, $postUpdate, true);
 
     header('Location: /');
     $_SESSION['notification']['notice'] = 'Le post a bien été modifié';
