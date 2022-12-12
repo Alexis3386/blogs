@@ -120,17 +120,43 @@ class BlogpostRepository
         );
     }
 
+    /**
+     * Post show on home page
+     *
+     * @param integer $limit
+     * @return Blogpost[]
+     */
     public function readLastPost(int $limit): array
     {
+        $result = [];
         $query = $this->pdo->prepare('SELECT * FROM blogpost ORDER BY `dateCreation` DESC limit :limit');
         $query->bindParam(':limit', $limit, PDO::PARAM_INT);
         $query->execute();
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $posts = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($posts as $post) {
+            $result[] = new Blogpost($post['titre'], 
+            $post['chapo'], 
+            $post['content'], 
+            $post['idAuthor'], 
+            $post['slug'],
+            $post['idPost'], 
+            new Datetime($post['dateCreation']), 
+            new Datetime($post['dateMiseAJour']));
+        }
         return $result;
     }
 
+    /**
+     * Post by category
+     *
+     * @param integer $idCategorie
+     * @param integer $currentPage
+     * @return Blogpost[]
+     */
     public function findPostbyCategory(int $idCategorie, int $currentPage): array
     {
+        $result = [];
         $offset = $this->pagination($currentPage);
         $query = $this->pdo->prepare("SELECT bp.* FROM blogpost as bp
                                         INNER JOIN categorieblogpost as cbp
@@ -139,16 +165,33 @@ class BlogpostRepository
                                         ON c.idCategorie = cbp.idcategorie
                                         WHERE c.idCategorie = :idCategorie
                                         ORDER BY dateCreation
-                                        DESC LIMIT " .  self::NB_POSTS_PER_PAGE . "
+                                        DESC LIMIT " . self::NB_POSTS_PER_PAGE . "
                                         OFFSET $offset");
         $query->bindParam(':idCategorie', $idCategorie, PDO::PARAM_INT);
         $query->execute();
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $posts = $query->fetchAll(PDO::FETCH_ASSOC);
+        foreach($posts as $post) {
+            $result[] = new Blogpost($post['titre'], 
+            $post['chapo'], 
+            $post['content'], 
+            $post['idAuthor'], 
+            $post['slug'],
+            $post['idPost'], 
+            new Datetime($post['dateCreation']), 
+            new Datetime($post['dateMiseAJour']));
+        }
         return $result;
     }
 
+    /**
+     * find post with pagination
+     *
+     * @param integer $currentPage
+     * @return Blogpost[]
+     */
     public function findPostWithPagination(int $currentPage): array
     {
+        $result = [];
         $offset = $this->pagination($currentPage);
         $query = $this->pdo->prepare("SELECT bp.*, us.pseudo FROM blogpost as bp 
                                         INNER JOIN users as us
@@ -156,7 +199,17 @@ class BlogpostRepository
                                         ORDER BY dateCreation 
                                         DESC LIMIT " . self::NB_POSTS_PER_PAGE . " OFFSET $offset");
         $query->execute();
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $posts = $query->fetchAll(PDO::FETCH_ASSOC);
+        foreach($posts as $post) {
+            $result[] = new Blogpost($post['titre'], 
+            $post['chapo'], 
+            $post['content'], 
+            $post['idAuthor'], 
+            $post['slug'],
+            $post['idPost'], 
+            new Datetime($post['dateCreation']), 
+            new Datetime($post['dateMiseAJour']));
+        }
         return $result;
     }
 

@@ -16,7 +16,7 @@ if( isset($_GET['categorie']) && !empty($_GET['categorie'])) {
     if ($postTrie === []) {
         $_SESSION['notification']['notice'] = 'Aucun post dans la categorie ' . $categorie->getLibelle();
         header('location: /');
-        exit();
+        return;
     } 
     render('postByCategorie.twig', ['postTrie' => $postTrie, 'categorie' => $categorie, 'currentPage' => $currentPage, 'nbpages' => $nbpages]);
 }
