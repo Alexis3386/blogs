@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Framework\Router;
 
 use App\Framework\Http\Request;
@@ -11,7 +12,12 @@ class Router
 
     public function __construct(private Kernel $kernel)
     {
-
+        if ($kernel->getParameters()->has('routes')) {
+            $routes = $kernel->getParameters()->get('routes');
+            foreach ($routes as $route) {
+                $this->addController(new $route());
+            }
+        }
     }
 
     public function addController(ControllerInterface $controller)
@@ -21,7 +27,7 @@ class Router
 
     public function findController(Request $request): ControllerInterface
     {
-        foreach($this->controllers as $controller) {
+        foreach ($this->controllers as $controller) {
             if (preg_match($controller->getRegexPath(), $request->getPath()) > 0) {
                 return $controller;
             }

@@ -2,7 +2,7 @@
 
 namespace App\Framework\Renderer;
 
-class Renderer
+class Renderer implements RendererInterface
 {
     const DEFAULT_NAMESPACE = '__MAIN';
 
@@ -43,8 +43,8 @@ class Renderer
             $path = $this->paths[self::DEFAULT_NAMESPACE] . DIRECTORY_SEPARATOR . $view;
         }
         ob_start();
-        $content = ob_get_clean();
-        return $content;
+        require($path);
+        return ob_get_clean();
     }
 
     private function hasNamespace(string $view): bool
@@ -63,6 +63,11 @@ class Renderer
         return str_replace('@' . $namespace, $this->paths[$namespace], $view);
     }
 
+    public function addGlobal(string $key, $value): void
+    {
+        
+    }
+    
     // function render(String $template, array $parametres = []): void
     // {
     //     $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/templates');

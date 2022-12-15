@@ -1,18 +1,11 @@
 <?php
 
-use App\Controller\TestController;
-use App\Framework\Factory\RequestFromHttpRequestFactory;
-use App\Kernel;
-use App\Service\Debug;
-
 require_once('../vendor/autoload.php');
 
-new Debug(new \Whoops\Run);
+use App\Kernel;
 
-$kernel = new Kernel();
+include(dirname(__DIR__) . '/config/conf.php');
 
-$kernel->getRouter()->addController(new TestController());
+$kernel = new Kernel($params);
 
-$request = RequestFromHttpRequestFactory::createRequest();
-
-$kernel->run($request);
+$kernel->runHttp();
