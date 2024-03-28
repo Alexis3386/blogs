@@ -12,11 +12,11 @@ use App\Repository\UserRepository;
 use App\Repository\PhotoRepository;
 
 
-const DB_SERVER = 'localhost';
-const DB_USERNAME = 'root';
-const DB_PASSWORD = '';
+const DB_SERVER = 'mysql';
+const DB_USERNAME = 'blogs';
+const DB_PASSWORD = 'secret';
 const DB_NAME = 'blogs';
-const DB_PORT = '3307';
+const DB_PORT = '3306';
 const CHARSET = 'utf8mb4';
 
 const NB_POSTS_HOME = 4;
