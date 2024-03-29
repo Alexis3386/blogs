@@ -14,7 +14,7 @@
 					<!-- Post preview -->
 					<div class="post-preview p-2 mb-3" style="background-color: aliceblue">
 						<a href="showPost.php?idPost={{ post.id }}">
-							<h2 class="post-title">{{ post.titre }}</h2>
+							<h2 class="post-title">{{ post.titre | raw }}</h2>
 							<h3 class="post-subtitle">{{ post.chapo }}</h3>
 						</a>
 						<p class="post-meta">

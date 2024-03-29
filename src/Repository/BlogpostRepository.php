@@ -188,6 +188,7 @@ class BlogpostRepository
      *
      * @param integer $currentPage
      * @return Blogpost[]
+     * @throws \Exception
      */
     public function findPostWithPagination(int $currentPage): array
     {

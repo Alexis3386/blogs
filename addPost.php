@@ -13,7 +13,7 @@ if ($user === null || $user->isadmin() === false) {
 }
 
 if (isset($_POST) && empty($_POST) === false) {
-    $post = new Blogpost(htmlspecialchars($_POST['titre']), htmlspecialchars($_POST['chapo']), htmlspecialchars($_POST['content']), $user->getId());
+    $post = new Blogpost(htmlspecialchars($_POST['titre'], double_encode: false), htmlspecialchars($_POST['chapo']), htmlspecialchars($_POST['content']), $user->getId());
     $post = $blogpostRepository->enregistrer($post);
     $slug = $blogpostRepository->updateSlug($post);
 

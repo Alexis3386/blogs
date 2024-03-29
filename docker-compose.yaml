@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   server:
     image: nginx:stable-alpine
@@ -25,6 +23,8 @@ services:
       - '4306:3306'
     env_file:
       - ./env/mysql.env
+    volumes:
+      - ./mysql:/var/lib/mysql
 
   composer:
     build:
