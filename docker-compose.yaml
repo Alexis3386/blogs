@@ -16,6 +16,8 @@ services:
       dockerfile: php.dockerfile
     volumes:
       - .:/var/www/html:delegated
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
   mysql:
     image: mysql:8.2
