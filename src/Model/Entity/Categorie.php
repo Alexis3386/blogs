@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Model\Entity;
 
 class Categorie {
     public function __construct (private int $id, private string $libelle) {

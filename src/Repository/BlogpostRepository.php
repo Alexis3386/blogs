@@ -3,7 +3,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Blogpost;
+use App\Model\Entity\Blogpost;
 use App\Util;
 use DateTime;
 use PDO;

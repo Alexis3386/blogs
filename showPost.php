@@ -1,6 +1,6 @@
 <?php
 
-use App\Entity\Commentaire;
+use App\Model\Entity\Commentaire;
 
 
 require 'init.php';

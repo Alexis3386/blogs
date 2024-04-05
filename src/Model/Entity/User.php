@@ -1,18 +1,21 @@
 <?php
 
 
-namespace App\Entity;
+namespace App\Model\Entity;
 
 
 class User
 {
+
+
     public function __construct(
-        private int $id,
-        private string $email,
-        private string $pseudo,
-        private string $username,
-        private bool $isadmin
-    ) {
+        private readonly int    $id,
+        private readonly string $email,
+        private readonly string $pseudo,
+        private readonly string $username,
+        private readonly bool   $isadmin,
+    )
+    {
     }
 
     /**
@@ -26,7 +29,7 @@ class User
     /**
      * @return bool
      */
-    public function isadmin(): bool
+    public function getisadmin(): bool
     {
         return $this->isadmin;
     }
@@ -53,5 +56,15 @@ class User
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
     }
 }

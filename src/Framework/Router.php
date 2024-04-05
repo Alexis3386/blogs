@@ -7,15 +7,19 @@ use App\Framework\Exception\NoRouteFoundException;
 
 class Router
 {
-    private $listRoute;
+    private mixed $listRoute;
 
     public function __construct()
     {
-        $stringRoute = file_get_contents('src/Framework/Config/route.json');
+        $stringRoute = file_get_contents('src/Config/route.json');
         $this->listRoute = json_decode($stringRoute);
     }
 
-    public function findRoute($httpRequest)
+    /**
+     * @throws MultipleRouteFoundException
+     * @throws NoRouteFoundException
+     */
+    public function findRoute($httpRequest): Route
     {
         $routeFound = array_filter($this->listRoute, function ($route) use ($httpRequest) {
             return preg_match("#^" . $route->path . "$#", $httpRequest->getUrl()) && $route->method == $httpRequest->getMethod();

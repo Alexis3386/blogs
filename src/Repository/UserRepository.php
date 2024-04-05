@@ -3,8 +3,8 @@
 
 namespace App\Repository;
 
-use App\Entity\Blogpost;
-use App\Entity\User;
+use App\Model\Entity\Blogpost;
+use App\Model\Entity\User;
 use PDO;
 
 class UserRepository
@@ -39,21 +39,6 @@ class UserRepository
         $query->bindParam(':password', $password, PDO::PARAM_STR);
         $query->bindParam(':isadmin', $isAdmin, PDO::PARAM_INT);
         return $query->execute();
-    }
-
-    public function findUserConnected(String $password, String $email): ?User
-    {
-        $query = $this->pdo->prepare("SELECT * FROM `users` WHERE email = :email");
-        $query->bindParam(':email', $email, PDO::PARAM_STR);
-        $query->execute();
-        $user = $query->fetch(PDO::FETCH_ASSOC);
-        if (!empty($user)) {
-            $hash = $user['password'];
-            if (password_verify($password, $hash)) {
-                return new User($user['id'], $user['email'], $user['pseudo'], $user['username'], $user['isadmin']);
-            }
-        }
-        return null;
     }
     
     public function findAuthor(Blogpost $post): ?User

@@ -2,6 +2,8 @@
 
 namespace App\Framework;
 
+use App\Framework\Exception\ActionNotFoundException;
+
 class HttpRequest
 {
     private array $_param;
@@ -9,10 +11,10 @@ class HttpRequest
     private mixed $_method;
     private Route $_route;
 
-    public function __construct()
+    public function __construct($url = null, $method = null)
     {
-        $this->_url = $_SERVER['REQUEST_URI'];
-        $this->_method = $_SERVER['REQUEST_METHOD'];
+        $this->_url = (is_null($url)) ? $_SERVER['REQUEST_URI'] : $url;
+        $this->_method = (is_null($method)) ? $_SERVER['REQUEST_METHOD'] : $method;
         $this->_param = array();
     }
 
@@ -36,22 +38,44 @@ class HttpRequest
         $this->_route = $route;
     }
 
-    public function binParam()
+    public function getRoute(): Route
+    {
+        return $this->_route;
+    }
+
+    public function binParam(): void
     {
 
         switch ($this->_method) {
             case "GET":
             case "DELETE":
-                if (preg_match("#" . $this->_route->getPath() . "#", $this->_url, $matches)) {
-                    for ($i = 1; $i < count($matches) - 1; $i++) {
-                        $this->_param[] = $matches[$i];
+                foreach ($this->_route->getParam() as $param) {
+                    if (isset($_GET[$param])) {
+                        $this->_param[] = $_GET[$param];
                     }
-                };
+                }
+                break;
             case "POST":
             case "PUT":
                 foreach ($this->_route->getParam() as $param) {
-                    $this->_param[] = $param;
+                    if (isset($_POST[$param])) {
+                        $this->_param[] = $_POST[$param];
+                    }
                 }
         }
+    }
+
+    /**
+     * @throws ActionNotFoundException|Exception\ControllerNotFoundException
+     */
+    public function run($config): void
+    {
+        $this->binParam();
+        $this->_route->run($this, $config);
+    }
+
+    public function addParam($value): void
+    {
+        $this->_param[] = $value;
     }
 }

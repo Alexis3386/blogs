@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\Commentaire;
-use PDO;
+use App\Model\Entity\Commentaire;
 use DateTime;
+use PDO;
 
 class CommentaireRepository
 {

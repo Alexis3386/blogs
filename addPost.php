@@ -4,7 +4,7 @@ require_once 'init.php';
 
 $upload_dir = "assets/img";
 
-use App\Entity\Blogpost;
+use App\Model\Entity\Blogpost;
 
 
 if ($user === null || $user->isadmin() === false) {

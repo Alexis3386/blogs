@@ -21,7 +21,6 @@ const CHARSET = 'utf8mb4';
 
 const NB_POSTS_HOME = 4;
 
-
 try {
     $pdo = new PDO(
         'mysql:host=' . DB_SERVER . ';dbname=' . DB_NAME . ';charset=' . CHARSET . ';port=' . DB_PORT,
@@ -56,7 +55,7 @@ $categories = $categorieRepository->returnAllcategorie();
 
 function render(String $template, array $parametres = []): void
 {
-    $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/templates');
+    $loader = new \Twig\Loader\FilesystemLoader('/templates', '/html');
     $twig = new \Twig\Environment($loader, [
         'cache' => false,
         'debug' => true

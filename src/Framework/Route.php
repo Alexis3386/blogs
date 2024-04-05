@@ -2,6 +2,9 @@
 
 namespace App\Framework;
 
+use App\Framework\Exception\ActionNotFoundException;
+use App\Framework\Exception\ControllerNotFoundException;
+
 class Route
 {
     private string $path;
@@ -9,6 +12,7 @@ class Route
     private string $action;
     private string $method;
     private array $param;
+    private $_manager;
 
     public function __construct($route)
     {
@@ -17,6 +21,7 @@ class Route
         $this->action = $route->action;
         $this->method = $route->method;
         $this->param = $route->param;
+        $this->_manager = $route->manager;
     }
 
     public function getPath(): string
@@ -44,4 +49,28 @@ class Route
         return $this->param;
     }
 
+    public function getManager()
+    {
+        return $this->_manager;
+    }
+
+    /**
+     * @throws ActionNotFoundException
+     * @throws ControllerNotFoundException
+     */
+    public function run($httpRequest, $config): void
+    {
+        $controller = null;
+        $controllerName = 'App\\Controller\\' . $this->controller . "Controller";
+        if (class_exists($controllerName)) {
+            $controller = new $controllerName($httpRequest, $config);
+            if (method_exists($controller, $this->action)) {
+                $controller->{$this->action}(...$httpRequest->getParams());
+            } else {
+                throw new ActionNotFoundException();
+            }
+        } else {
+            throw new ControllerNotFoundException();
+        }
+    }
 }

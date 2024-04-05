@@ -1,0 +1,75 @@
+[
+  {
+    "path": "/",
+    "controller": "Home",
+    "action": "Home",
+    "method": "GET",
+    "param": [],
+    "manager": [
+      "UserManager",
+      "BlogPostManager"
+    ]
+  },
+  {
+    "path": "/register",
+    "controller": "Register",
+    "action": "RegisterShow",
+    "method": "GET",
+    "param": [],
+    "manager": [
+      "UserManager"
+    ]
+  },
+  {
+    "path": "/register",
+    "controller": "Register",
+    "action": "Register",
+    "method": "POST",
+    "param": [
+      "email",
+      "name",
+      "pseudo",
+      "password"
+    ],
+    "manager": [
+      "UserManager"
+    ]
+  },
+  {
+    "path": "/connexion",
+    "controller": "Register",
+    "action": "ConnectShow",
+    "method": "GET",
+    "param": [],
+    "manager": []
+  },
+  {
+    "path": "/connexion",
+    "controller": "Register",
+    "action": "Connect",
+    "method": "POST",
+    "param": [
+      "email",
+      "password"
+    ],
+    "manager": [
+      "UserManager"
+    ]
+  },
+  {
+    "path": "/deconnexion",
+    "controller": "Register",
+    "action": "Logout",
+    "method": "GET",
+    "param": [],
+    "manager": []
+  },
+  {
+    "path": "/error",
+    "controller": "Error",
+    "action": "Show",
+    "method": "GET",
+    "param": [],
+    "manager": []
+  }
+]

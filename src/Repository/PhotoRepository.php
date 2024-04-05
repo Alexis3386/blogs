@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Blogpost;
+use App\Model\Entity\Blogpost;
 use PDO;
 
 class PhotoRepository {

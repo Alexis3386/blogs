@@ -1,0 +1,15 @@
+{
+  "autoloadFolder": [
+    "src/Framework",
+    "src/Controller",
+    "src/Model",
+    "src/Framework/Exception"
+  ],
+  "database":  {
+    "name": "Ma base de données",
+    "dbname": "blogs",
+    "host": "mysql",
+    "user": "blogs",
+    "password": "secret"
+  }
+}
