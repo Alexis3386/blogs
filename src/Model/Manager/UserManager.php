@@ -3,6 +3,7 @@
 namespace App\Model\Manager;
 
 use App\Framework\BaseManager;
+use App\Model\Entity\Blogpost;
 use App\Model\Entity\User;
 use PDO;
 
@@ -24,6 +25,19 @@ class UserManager extends BaseManager
             if (password_verify($password, $hash)) {
                 return new User($user['id'], $user['email'], $user['pseudo'], $user['username'], $user['isadmin']);
             }
+        }
+        return null;
+    }
+
+    public function findAuthor(Blogpost $post): ?User
+    {
+        $id = $post->getAuthorId();
+        $query = $this->_bdd->prepare('SELECT * FROM `users` WHERE id = :id');
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
+        $query->execute();
+        $user = $query->fetch(PDO::FETCH_ASSOC);
+        if (!empty($user)) {
+            return new User($user['id'], $user['email'], $user['pseudo'], $user['username'], $user['isadmin']);
         }
         return null;
     }

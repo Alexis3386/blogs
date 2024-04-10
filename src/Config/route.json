@@ -65,6 +65,126 @@
     "manager": []
   },
   {
+    "path": "/showPost",
+    "controller": "Posts",
+    "action": "showPost",
+    "method": "GET",
+    "param": ["id"],
+    "manager": [
+      "BlogPostManager",
+      "ImageManager",
+      "ComentManager",
+      "CategoryManager",
+      "UserManager"
+    ]
+  },
+  {
+    "path": "/showPostByCategory",
+    "controller": "Posts",
+    "action": "showByCategory",
+    "method": "GET",
+    "param": ["categorie", "page"],
+    "manager": [
+      "BlogPostManager",
+      "CategoryManager"
+    ]
+  },
+  {
+    "path": "/addComent",
+    "controller": "Posts",
+    "action": "addComent",
+    "method": "POST",
+    "param": ["postId", "content"],
+    "manager": [
+      "BlogPostManager",
+      "ComentManager"
+    ]
+  },
+  {
+    "path": "/removeComent",
+    "controller": "Coment",
+    "action": "removeComent",
+    "method": "POST",
+    "param": ["comentId"],
+    "manager": [
+      "BlogPostManager",
+      "ComentManager"
+    ]
+  },
+  {
+    "path": "/administration",
+    "controller": "Admin",
+    "action": "index",
+    "method": "GET",
+    "param": [],
+    "manager": [
+      "ComentManager"
+    ]
+  },
+  {
+    "path": "/validComent",
+    "controller": "Admin",
+    "action": "validComent",
+    "method": "POST",
+    "param": ["commentToValidate"],
+    "manager": [
+      "ComentManager"
+    ]
+  },
+  {
+    "path": "/showAddPost",
+    "controller": "Posts",
+    "action": "showAddPost",
+    "method": "GET",
+    "param": [],
+    "manager": [
+    ]
+  },
+  {
+    "path": "/addPost",
+    "controller": "Posts",
+    "action": "addPost",
+    "method": "POST",
+    "param": ["titre", "chapo", "content", "categorie"],
+    "manager": [
+      "BlogPostManager",
+      "CategoryManager",
+      "ImageManager"
+    ]
+  },
+  {
+    "path": "/deletePost",
+    "controller": "Posts",
+    "action": "deletePost",
+    "method": "GET",
+    "param": ["idPost"],
+    "manager": [
+      "BlogPostManager"
+    ]
+  },
+  {
+    "path": "/showEdit",
+    "controller": "Posts",
+    "action": "showEditPost",
+    "method": "GET",
+    "param": ["idPost"],
+    "manager": [
+      "BlogPostManager"
+    ]
+  },
+  {
+    "path": "/editPost",
+    "controller": "Posts",
+    "action": "editPost",
+    "method": "POST",
+    "param": ["id", "titre", "chapo", "content", "categorie"],
+    "manager": [
+      "BlogPostManager",
+      "ImageManager",
+      "CategoryManager"
+    ]
+  },
+  {
     "path": "/error",
     "controller": "Error",
     "action": "Show",

@@ -25,7 +25,7 @@ class RegisterController extends BaseController
     public function Connect($password, $email): void
     {
         $isValid = true;
-        $user = $this->_manager->findUserConnected($email, $password);
+        $user = $this->_manager["App\Model\Manager\UserManager"]->findUserConnected($email, $password);
         if ($user === null) {
             $_SESSION['notification']['warning'] = 'Votre mot de passe ou votre email ne sont pas correctes';
             $isValid = false;

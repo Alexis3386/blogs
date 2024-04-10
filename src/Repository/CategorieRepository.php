@@ -27,23 +27,6 @@ class CategorieRepository
         return $result;
     }
 
-    public function associeCategorie(array $categories, Blogpost $post, bool $update) : void
-    {
-        $idPost = $post->getId();
-        if ($update) {
-            $query = $this->pdo->prepare("DELETE FROM `categorieblogpost` WHERE idblogpost = :idblogpost");
-            $query->bindParam(':idblogpost', $idPost);
-            $query->execute();
-        }
-        foreach ($categories as $categorie) {
-            $categorie = intval($categorie);
-            $query = $this->pdo->prepare("INSERT INTO `categorieblogpost` (idcategorie, idblogpost) VALUES (:idcategorie, :idblogpost)");
-            $query->bindParam(':idcategorie', $categorie, PDO::PARAM_INT);
-            $query->bindParam(':idblogpost', $idPost, PDO::PARAM_INT);
-            $query->execute();
-        }
-    }
-
     public function categorieByPost(Blogpost $post): array
     {
         $idPost = $post->getId();
@@ -54,16 +37,5 @@ class CategorieRepository
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function findById(int $id): ?Categorie
-    {
-        $query = $this->pdo->prepare('SELECT * FROM categorie WHERE idCategorie = :idCategorie');
-        $query->bindParam('idCategorie', $id, PDO::PARAM_INT);
-        $query->execute();
 
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if ($result !== []) {
-            return new Categorie($result['idCategorie'], $result['libelle']);
-        }
-        return null;
-    }
 }

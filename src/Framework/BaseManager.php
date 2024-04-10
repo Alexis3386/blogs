@@ -22,7 +22,7 @@ class BaseManager
     {
         $req = $this->_bdd->prepare("SELECT * FROM " . $this->_table . " WHERE id=?");
         $req->execute(array($id));
-        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->_object);
+        $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'App\\Model\\Entity\\' . $this->_object);
         return $req->fetch();
     }
 
@@ -42,12 +42,12 @@ class BaseManager
         $paramNumber = count($param);
         $valueArray = array_fill(1, $paramNumber, "?");
         $valueString = implode(", ", $valueArray,);
-        $sql = "INSERT INTO " . $this->_table . "(" . implode( ", ", $param) . ") VALUES(" . $valueString . ")";
+        $sql = "INSERT INTO " . $this->_table . "(" . implode(", ", $param) . ") VALUES(" . $valueString . ")";
         $req = $this->_bdd->prepare($sql);
         $boundParam = array();
         foreach ($param as $paramName) {
             if (property_exists($obj, $paramName)) {
-                $methodName = "get".$paramName;
+                $methodName = "get" . $paramName;
                 $boundParam[$paramName] = $obj->$methodName();
             } else {
                 throw new PropertyNotFoundException($this->_object, $paramName);

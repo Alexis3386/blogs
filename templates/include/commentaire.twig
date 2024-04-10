@@ -10,15 +10,15 @@
 	<div class="d-flex">
 		{% if (user.getId == commentaire.idUser) or (user.isAdmin) %}
 			<div class="d-flex">
-				<form action="" method="post">
-					<input type="hidden" name="commentDel">
-					<input type="hidden" name="commentIdtoDel" value={{commentaire.id}}>
+				<form action="\removeComent" method="post">
+					<input type="hidden" name="postId">
+					<input type="hidden" name="comentId" value={{commentaire.id}}>
 					<button class="btn btn-danger p-2" type="submit">Effacer</button>
 				</form>
 			</div>
 		{% endif %}
 		{% if (user.isAdmin) and (commentaire.isValide == 0) %}
-			<form action="" method="post">
+			<form action="\validComent" method="post">
 				<input type="hidden" name="commentToValidate" value={{commentaire.id}}>
 				<button class="btn btn-primary p-2" type="submit">Valider</button>
 			</form>

@@ -1,15 +1,11 @@
 <?php
 require_once 'vendor/autoload.php';
-require_once 'src/utilimage.php';
 
 session_start();
 session_regenerate_id();
 
-use App\Repository\BlogpostRepository;
 use App\Repository\CategorieRepository;
-use App\Repository\CommentaireRepository;
 use App\Repository\UserRepository;
-use App\Repository\PhotoRepository;
 
 
 const DB_SERVER = 'mysql';
@@ -47,29 +43,7 @@ if (isset($_SESSION, $_SESSION['user'])) {
     $user = unserialize($_SESSION['user']);
 }
 
-$blogpostRepository = new BlogpostRepository($pdo);
+//$blogpostRepository = new BlogpostRepository($pdo);
 $categorieRepository = new CategorieRepository($pdo);
-$photoRepository = new PhotoRepository($pdo);
-$commentaireRepository = new CommentaireRepository($pdo);
+//$photoRepository = new PhotoRepository($pdo);
 $categories = $categorieRepository->returnAllcategorie();
-
-function render(String $template, array $parametres = []): void
-{
-    $loader = new \Twig\Loader\FilesystemLoader('/templates', '/html');
-    $twig = new \Twig\Environment($loader, [
-        'cache' => false,
-        'debug' => true
-    ]);
-
-    global $user, $user_connecte, $categories;
-    $defaultParam = [
-        'user_connecte' => $user_connecte,
-        'user' => $user,
-        'categories' => $categories,
-    ];
-    if (isset($_SESSION['notification'])) {
-        $defaultParam['notification'] = $_SESSION['notification'];
-    }
-    echo $twig->render($template,  array_merge($defaultParam, $parametres));
-    unset($_SESSION['notification']);
-}

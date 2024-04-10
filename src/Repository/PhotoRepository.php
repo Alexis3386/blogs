@@ -32,12 +32,4 @@ class PhotoRepository {
         return $query->execute();
     }
 
-    public function recuperPostImage(Blogpost $post): array {
-        $idPost = $post->getId();
-        $query = $this->pdo->prepare('SELECT * FROM `image` INNER JOIN `imageblogpost` AS imb ON imb.idimage = image.idimage INNER JOIN `blogpost` as bp ON imb.idblogpost = bp.idPost WHERE bp.idPost = :idPost;');
-        $query->bindParam(':idPost', $idPost, PDO::PARAM_INT);
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
-    }
-
 }

@@ -5,7 +5,7 @@
 {% block content %}
 	<div class="col-6">
 		<h1>Modifier le post</h1>
-		<form method="post" enctype="multipart/form-data">
+		<form method="post" action="\editPost" enctype="multipart/form-data">
 			<div class="mb-3">
 				<label for="" class="form-label">Titre du post</label>
 				<input type="text" class="form-control" id="" {% if postUpdate %} value="{{ postUpdate.titre }}" {% endif %} name="titre" placeholder="titre du post">
@@ -34,7 +34,7 @@
 				<input type="file" name="image_principale" class="form-control" accept=".jpg,.png,.gif,.webp" value="">
 			</div>
 			{% if postUpdate %}
-				<input type="hidden" name="postUpdateId" value= {{ postUpdate.id }}>
+				<input type="hidden" name="id" value= {{ postUpdate.id }}>
 				<button type="submit" class="btn btn-primary">Modifier</button>
 			{% endif %}
 		</form>

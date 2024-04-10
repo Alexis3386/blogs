@@ -13,7 +13,7 @@
 				{% for post in posts %}
 					<!-- Post preview -->
 					<div class="post-preview p-2 mb-3" style="background-color: aliceblue">
-						<a href="showPost.php?idPost={{ post.id }}">
+						<a href="\showPost?id={{ post.id }}">
 							<h2 class="post-title">{{ post.titre | raw }}</h2>
 							<h3 class="post-subtitle">{{ post.chapo }}</h3>
 						</a>
@@ -25,8 +25,8 @@
 						</p>
 						{% if user.isadmin %}
 							<div>
-								<a class="btn btn-danger" href="/?delete=true&idPost={{ post.id }}">Supprimer</a>
-								<a class="btn btn-primary" href="updatePost.php?idPost= {{ post.id }}">Modifier</a>
+								<a class="btn btn-danger" href="\deletePost?idPost={{ post.id }}">Supprimer</a>
+								<a class="btn btn-primary" href="\showEdit?idPost= {{ post.id }}">Modifier</a>
 							</div>
 						{% endif %}
 					</div>

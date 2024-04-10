@@ -19,6 +19,15 @@ class BaseController
         $this->bindManager();
     }
 
+    public function getCurrentUser()
+    {
+        $user = null;
+        if (isset($_SESSION, $_SESSION['user'])) {
+            $user = unserialize($_SESSION['user']);
+        }
+        return $user;
+    }
+
     protected function view($template, array $parametres = []): void
     {
 

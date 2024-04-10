@@ -3,7 +3,7 @@
 	<ul class="nav flex-column">
 		{% for categorie in categories %}
 			<li class="nav-item">
-				<a class="nav-link" href="affichebyCategory.php?categorie={{categorie.id}}">{{ categorie.libelle }}</a>
+				<a class="nav-link" href="\showPostByCategory?categorie={{categorie.id}}">{{ categorie.libelle }}</a>
 			</li>
 		{% endfor %}
 	</ul>

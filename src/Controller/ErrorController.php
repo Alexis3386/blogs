@@ -7,6 +7,6 @@ class ErrorController extends BaseController
     public function Show($exception): void
     {
         $this->addParam("exception", $exception);
-        $this->view("error.twig");
+        $this->view("error.twig", ['exception' => $exception]);
     }
 }
