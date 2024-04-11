@@ -185,6 +185,22 @@
     ]
   },
   {
+    "path": "/contact",
+    "controller": "Contact",
+    "action": "showContact",
+    "method": "GET",
+    "param": [],
+    "manager": []
+  },
+  {
+    "path": "/contact",
+    "controller": "Contact",
+    "action": "contact",
+    "method": "POST",
+    "param": ["name", "email", "subject", "msg"],
+    "manager": []
+  },
+  {
     "path": "/error",
     "controller": "Error",
     "action": "Show",
