@@ -53,4 +53,19 @@ class CategoryManager extends BaseManager
         }
         return null;
     }
+
+    public function getAllcategorie(): array
+    {
+        $result = [];
+        $sth = $this->_bdd->prepare("SELECT * from categorie");
+        $sth->execute();
+
+        $categories = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($categories as $categorie) {
+            $result[] = new Categorie($categorie['idCategorie'], $categorie['libelle']);
+        }
+
+        return $result;
+    }
 }

@@ -41,4 +41,32 @@ class UserManager extends BaseManager
         }
         return null;
     }
+
+    public function isMailUnique(String $mail): bool
+    {
+        $verif_mail = $this->_bdd->prepare("SELECT email FROM users WHERE email = :email");
+        $verif_mail->bindParam(':email', $mail, PDO::PARAM_STR);
+        $verif_mail->execute();
+        return empty($verif_mail->fetch(PDO::FETCH_ASSOC));
+    }
+
+    public function isPseudoUnique(String $pseudo): bool
+    {
+        $ver_pseudo = $this->_bdd->prepare("SELECT pseudo FROM users WHERE pseudo = :pseudo");
+        $ver_pseudo->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+        $ver_pseudo->execute();
+        return empty($ver_pseudo->fetch(PDO::FETCH_ASSOC));
+    }
+
+    public function enregistrer(String $password, String $pseudo, String $username, String $email, bool $isAdmin = false): bool
+    {
+        $password = password_hash($password, PASSWORD_BCRYPT);
+        $query = $this->_bdd->prepare("INSERT INTO `users` (pseudo, username, email, password, isadmin) VALUES (:pseudo, :username, :email, :password, :isadmin)");
+        $query->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+        $query->bindParam(':username', $username, PDO::PARAM_STR);
+        $query->bindParam(':email', $email, PDO::PARAM_STR);
+        $query->bindParam(':password', $password, PDO::PARAM_STR);
+        $query->bindParam(':isadmin', $isAdmin, PDO::PARAM_INT);
+        return $query->execute();
+    }
 }

@@ -16,16 +16,22 @@ class PostsController extends BaseController
         $post = $this->_manager["App\Model\Manager\BlogPostManager"]->getPostById($id);
         $postimage = $this->_manager["App\Model\Manager\ImageManager"]->getPostImage($post);
         $commentaires = $this->_manager["App\Model\Manager\ComentManager"]->getCommentByPost($id);
+        $categories = $this->_manager["App\Model\Manager\CategoryManager"]->getAllcategorie();
         $categorie = $this->_manager["App\Model\Manager\CategoryManager"]->getCategoryByPost($post);
         $author = $this->_manager["App\Model\Manager\UserManager"]->findAuthor($post);
         $user = $this->getCurrentUser();
 
-        $this->view('showPost.twig', ['commentaires' => $commentaires,
-            'post' => $post,
-            'image' => $postimage,
-            'postcategories' => $categorie,
-            'author' => $author,
-            'user' => $user]);
+        $this->view('showPost.twig',
+            [
+                'commentaires' => $commentaires,
+                'post' => $post,
+                'image' => $postimage,
+                'postcategories' => $categorie,
+                'author' => $author,
+                'user' => $user,
+                'categories' => $categories,
+            ]
+        );
     }
 
     /**
@@ -40,6 +46,7 @@ class PostsController extends BaseController
         $nbpages = $this->_manager["App\Model\Manager\BlogPostManager"]->countNbpage($categorie);
         $postTrie = $this->_manager["App\Model\Manager\BlogPostManager"]->findPostbyCategory($categorie, $page);
         $categorie = $this->_manager["App\Model\Manager\CategoryManager"]->findById($categorie);
+        $categories = $this->_manager["App\Model\Manager\CategoryManager"]->getAllcategorie();
         if ($postTrie === []) {
             $_SESSION['notification']['notice'] = 'Aucun post dans la categorie ' . $categorie->getLibelle();
             header('location: /');
@@ -51,7 +58,8 @@ class PostsController extends BaseController
                 'postTrie' => $postTrie,
                 'categorie' => $categorie,
                 'currentPage' => $page,
-                'nbpages' => $nbpages
+                'nbpages' => $nbpages,
+                'categories' => $categories,
             ]
         );
     }
@@ -101,12 +109,13 @@ class PostsController extends BaseController
 
     public function showAddPost(): void
     {
+        $categories = $this->_manager["App\Model\Manager\CategoryManager"]->getAllcategorie();
         if ($this->getCurrentUser() === null || !$this->getCurrentUser()->getisadmin()) {
             header('location: /connexion');
             return;
         }
         $this->view(
-            'addPost.twig',
+            'addPost.twig',['categories' => $categories]
         );
     }
 
@@ -156,10 +165,14 @@ class PostsController extends BaseController
         }
 
         $post = $this->_manager["App\Model\Manager\BlogPostManager"]->getPostById($idPost);
+        $categories = $this->_manager["App\Model\Manager\CategoryManager"]->getAllcategorie();
 
         $this->view(
             'updatePost.twig',
-            ['postUpdate' => $post]
+            [
+                'postUpdate' => $post,
+                'categories' => $categories,
+            ]
         );
     }
 

@@ -19,7 +19,7 @@
 						</a>
 						<p class="post-meta">
 							Posté par
-							<a href="#">{{ post.pseudo }}</a>
+							<a href="#">{{ user.getpseudo(post.idAuthor) }}</a>
 							le
 							{{ post.dateCreation |date('d-m-Y H:i:s') }}
 						</p>

@@ -4,10 +4,6 @@ require_once 'vendor/autoload.php';
 session_start();
 session_regenerate_id();
 
-use App\Repository\CategorieRepository;
-use App\Repository\UserRepository;
-
-
 const DB_SERVER = 'mysql';
 const DB_USERNAME = 'blogs';
 const DB_PASSWORD = 'secret';
@@ -33,17 +29,9 @@ $whoops = new \Whoops\Run;
 $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
 $whoops->register();
 
-$userRepository = new UserRepository($pdo);
-
-
 $user = null;
 $user_connecte = false;
 if (isset($_SESSION, $_SESSION['user'])) {
     $user_connecte = true;
     $user = unserialize($_SESSION['user']);
 }
-
-//$blogpostRepository = new BlogpostRepository($pdo);
-$categorieRepository = new CategorieRepository($pdo);
-//$photoRepository = new PhotoRepository($pdo);
-$categories = $categorieRepository->returnAllcategorie();

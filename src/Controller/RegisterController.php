@@ -13,8 +13,13 @@ class RegisterController extends BaseController
 
     public function Register($email, $name, $pseudo, $password): void
     {
-        $user = new User($email, $name, $pseudo, false, $password,);
-        $this->_manager->create($user, ['email', 'username', 'pseudo', 'isadmin', 'password']);
+        if ($this->_manager["App\Model\Manager\UserManager"]->isMailUnique($email) &&
+            $this->_manager["App\Model\Manager\UserManager"]->isPseudoUnique($pseudo)) {
+            if ($this->_manager["App\Model\Manager\UserManager"]->enregistrer($password, $pseudo, $name, $email)) {
+                $_SESSION['notification']['notice'] = 'Utilisateur enregistré';
+                header('location: /');
+            };
+        }
     }
 
     public function ConnectShow(): void
@@ -38,7 +43,8 @@ class RegisterController extends BaseController
         }
     }
 
-    public function Logout(): void {
+    public function Logout(): void
+    {
         session_destroy();
         $user_connecte = false;
         header('Location: /');

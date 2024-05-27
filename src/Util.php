@@ -18,6 +18,8 @@ class Util
         if (($name === 'email') && !filter_var($donnees[$name], FILTER_VALIDATE_EMAIL)) {
             return false;
         }
+
+        return true;
     }
 
     public static function checkMdpFormat(string $mdp): bool
